@@ -1,0 +1,7 @@
+
+#Items that have a pKa value set
+SELECT ?item ?value
+WHERE
+{
+    ?item wdt:P1117 ?value . 
+}

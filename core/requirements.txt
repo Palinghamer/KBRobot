@@ -1,0 +1,59 @@
+# This is a PIP 6+ requirements file for using Pywikibot and scripts
+#
+# All dependencies can be installed using:
+# $ sudo pip install -r requirements.txt
+#
+# It is organised so that simple requirements
+# are processed first, and more difficult packages
+# are last.
+#
+# It is good practise to install packages using the system
+# package manager if it has a packaged version.  If you are
+# unsure, please use pip as described at the top of the file.
+#
+# To get a list of potential matches, use
+#
+# $ awk -F '[#>=]' '{print $1}' requirements.txt | xargs yum search
+#     or
+# $ awk -F '[#>=]' '{print $1}' requirements.txt | xargs apt-cache search
+
+# mandatory dependencies, others are optional
+mwparserfromhell>=0.5.2
+packaging
+requests>=2.31.0
+
+# MediaWiki markup parser
+# mwparserfromhell is mandatory but wikitextparser can be used instead
+# mwparserfromhell is still required for commons_information.py and patrol.py
+# wikitextparser is required for Page.authorship()
+wikitextparser>=0.56.3
+
+# OAuth support
+# mwoauth 0.2.4 is needed because it supports getting identity information
+# about the user
+# Due to T380270 PyJWT must be set
+PyJWT != 2.10.0, != 2.10.1; python_version > '3.8'
+mwoauth>=0.2.4,!=0.3.1
+
+# interwiki_graph.py module and category_graph.py script:
+pydot >= 3.0.2
+
+# cosmetic_changes
+python-stdnum >= 1.20
+
+# GUI
+Pillow>=11.1.0; python_version > "3.8"
+Pillow==10.4.0; python_version < "3.9"
+
+# core pagegenerators
+google >= 1.7
+requests-sse >= 0.5.0
+
+# The mysql generator in pagegenerators depends on PyMySQL
+PyMySQL >= 1.1.1
+
+# core HTML comparison parser in diff module
+beautifulsoup4>=4.7.1
+
+# scripts/weblinkchecker.py
+memento_client==0.6.1

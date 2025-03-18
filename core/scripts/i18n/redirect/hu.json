@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bináris",
+			"Csega",
+			"Dj",
+			"Tacsipacsi"
+		]
+	},
+	"redirect-broken-redirect-template": "{{azonnali|Hibás átirányítás}}",
+	"redirect-fix-broken-moved": "Átnevezett oldalra mutató, hibás átirányítás javítása, új cél: %(to)s",
+	"redirect-fix-double": "%(to)s lapra mutató dupla átirányítás javítása",
+	"redirect-fix-loop": "ide mutató átirányítási hurkok javítása: %(to)s",
+	"redirect-remove-broken": "törölt vagy nem létező lapra mutató átirányítás törlése",
+	"redirect-remove-loop": "körkörös átirányítás"
+}

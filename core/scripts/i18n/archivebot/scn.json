@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ajeje Brazorf"
+		]
+	},
+	"archivebot-archiveheader": "{{Archiviu di discussioni}}",
+	"archivebot-older-than": "cchiù {{PLURAL:%(count)d|vecchiu|vecchî}} di %(duration)s"
+}

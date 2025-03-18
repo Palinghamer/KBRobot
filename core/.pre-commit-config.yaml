@@ -1,0 +1,106 @@
+default_install_hook_types:
+  - commit-msg
+  - pre-commit
+repos:
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+      - id: check-useless-excludes
+  - repo: https://gitlab.wikimedia.org/repos/ci-tools/commit-message-validator
+    rev: v2.1.0
+    hooks:
+      - id: commit-message-validator
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+        args:
+          - --maxkb=200
+      - id: check-ast
+      - id: check-builtin-literals
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
+      - id: check-toml
+      - id: check-vcs-permalinks
+      - id: check-xml
+      - id: check-yaml
+      - id: debug-statements
+      - id: destroyed-symlinks
+      - id: detect-private-key
+      - id: double-quote-string-fixer
+      - id: end-of-file-fixer
+      - id: fix-byte-order-marker
+        exclude: '^tests/data/'
+      - id: forbid-new-submodules
+      - id: mixed-line-ending
+      - id: pretty-format-json
+        args:
+          - --autofix
+          - --indent=4
+          - --no-ensure-ascii
+        exclude: pywikibot/scripts/i18n/pywikibot/
+      - id: trailing-whitespace
+        args:
+          - --markdown-linebreak-ext=rst
+        exclude: '^tests/data/'
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+      - id: python-check-blanket-noqa
+      - id: python-check-blanket-type-ignore
+      - id: python-check-mock-methods
+      - id: python-no-log-warn
+      - id: python-use-type-annotations
+      - id: rst-directive-colons
+      - id: rst-inline-touching-normal
+      - id: text-unicode-replacement-char
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.9
+    hooks:
+      - id: ruff
+        args:
+        - --fix
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.19.1
+    hooks:
+      - id: pyupgrade
+        args:
+          - --py38-plus
+  - repo: https://github.com/PyCQA/autoflake
+    rev: v2.3.1
+    hooks:
+      - id: autoflake
+        args:
+          - --expand-star-imports
+          - --in-place
+          - --remove-all-unused-imports
+          - --remove-duplicate-keys
+          - --remove-unused-variables
+        exclude: '^pywikibot/backports\.py$'
+  - repo: https://github.com/PyCQA/isort
+    rev: 6.0.1
+    hooks:
+      - id: isort
+        exclude: '^pwb\.py$'
+  - repo: https://github.com/jshwi/docsig
+    rev: v0.69.1
+    hooks:
+      - id: docsig
+        exclude: ^(tests|scripts)
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.1.2
+    hooks:
+      - id: flake8
+        args:
+          - --doctests
+        additional_dependencies:
+          # Due to incompatibilities between packages the order matters.
+          - flake8-bugbear>=24.10.31
+          - flake8-mock-x2
+          - flake8-print>=5.0.0
+          - flake8-quotes>=3.4.0
+          - flake8-tuple>=0.4.1
+          - pep8-naming>=0.14.1
