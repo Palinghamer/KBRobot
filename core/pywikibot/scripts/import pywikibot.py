@@ -122,7 +122,7 @@ def add_claims(site, item_title, row, property_map):
         except Exception as e:
             print(f"Error on {col} ({prop}): {e}")
 
-    print(f"Claims added for {item_title}\n")
+    print(f"✅ Claims added for {item_title}\n")
 
 # -------------------------
 # Main loop
