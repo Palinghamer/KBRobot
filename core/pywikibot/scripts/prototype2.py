@@ -68,6 +68,22 @@ def check_and_create_item(site, item_title):
         labels = {"en": item_title}
         return create_item(site, labels)
 
+def claim_already_exists(item, prop, target_value):
+    """
+    Checks whether a claim with the given property and target already exists.
+    """
+    existing_claims = item.claims.get(prop, [])
+
+    for claim in existing_claims:
+        if isinstance(target_value, pywikibot.ItemPage) and claim.getTarget().id == target_value.id:
+            return True
+        elif isinstance(target_value, str) and claim.getTarget() == target_value:
+            return True
+        elif isinstance(target_value, pywikibot.WbTime) and claim.getTarget().toTimestr() == target_value.toTimestr():
+            return True
+
+    return False
+
 # -------------------------
 # Add claims to item
 # -------------------------
@@ -96,13 +112,22 @@ def add_claims(site, item_title, row, property_map):
                 if match:
                     target = pywikibot.ItemPage(repo, match.group(0))
                     target.get()
+
+                    if claim_already_exists(item, prop, target):
+                        print(f"Claim {prop} -> {target.id} already exists. Skipping.")
+                        continue
+
                     claim = pywikibot.Claim(repo, prop)
                     claim.setTarget(target)
-                    item.addClaim(claim, summary=f"Adding item claim {prop} -> {match.group(0)}")
+                    item.addClaim(claim, summary=f"Adding item claim {prop} -> {target.id}")
                 else:
                     print(f"Skipping {col}: No QID in value '{value}'")
 
             elif val_type == "string":
+                if claim_already_exists(item, prop, str(value)):
+                    print(f"Claim {prop} -> '{value}' already exists. Skipping.")
+                    continue
+
                 claim = pywikibot.Claim(repo, prop)
                 claim.setTarget(str(value))
                 item.addClaim(claim, summary=f"Adding string claim {prop} -> {value}")
@@ -110,10 +135,15 @@ def add_claims(site, item_title, row, property_map):
             elif val_type == "date":
                 parsed = pd.to_datetime(value, errors="coerce")
                 if pd.notna(parsed):
-                    dateclaim = pywikibot.Claim(repo, prop)
                     date_target = pywikibot.WbTime(
                         year=parsed.year, month=parsed.month, day=parsed.day
                     )
+
+                    if claim_already_exists(item, prop, date_target):
+                        print(f"Date claim {prop} -> {parsed.date()} already exists. Skipping.")
+                        continue
+
+                    dateclaim = pywikibot.Claim(repo, prop)
                     dateclaim.setTarget(date_target)
                     item.addClaim(dateclaim, summary=f"Adding date claim {prop} -> {parsed.date()}")
                 else:
@@ -123,6 +153,7 @@ def add_claims(site, item_title, row, property_map):
             print(f"Error on {col} ({prop}): {e}")
 
     print(f"Claims added for {item_title}\n")
+
 
 # -------------------------
 # Main loop
