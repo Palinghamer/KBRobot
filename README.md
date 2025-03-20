@@ -5,9 +5,6 @@ This project automates item creation and population on [Wikidata](https://www.wi
 ![Ontology graph](images/LabEL_ontology_V2.png)
 _Figure 1: Visualisation of LabEL ontology._
 
-![Ontology graph](images/LabEL_ontology_V1.png)
-_Figure 2; Visualisation of LabEL ontology without subclasses._
-
 The bot takes a structured .CSV file, checks for existing items based on the title of the work, creates a new item if none exist, and adds the recorded claims and sources automatically. FFor this reason, it is critical that the data provided to the bot is correct and adheres to [Wikidata policies and guidelines](https://www.wikidata.org/wiki/Wikidata:List_of_policies_and_guidelines), particularly the [notability criterion](https://www.wikidata.org/wiki/Wikidata:Notability).
 
 ### Future additions
