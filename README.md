@@ -9,8 +9,11 @@ Please refer to the graph below for a graph of the current ontology model.
 ![Ontology graph](ontology/LabEL_ontology_V4.png)
 _Figure 1: Visualisation of the LabEL ontology._
 
-<u>**Note:**</u> this schema serves to understand the RDF and the TTL logic is not entirely true to the logic within the Wikidata model itself. Properties and their targets are instead represented as classes and subclasses, and some of these nodes have been renamed for clarity.
+<u>**Note:**</u> this schema serves to help understand the RDF and does not fully reflect the logic of the actual Wikidata model. Properties and their targets are represented as classes and subclasses, and some of these nodes have been renamed for clarity.
 
-### Future additions
+### Upcoming changes
 
-Soon, this project will be updated with: (1) guidelines for structured data entry that are in line with Wikidata policies and guidelines; and (2) documentation of the scripts used for this project and how to edit or add to them.
+- [ ] Support for dates
+- [ ] Logging changes made
+- [ ] Guidelines for structured data entry
+- [ ] Documentation for scripts & pywikibot
