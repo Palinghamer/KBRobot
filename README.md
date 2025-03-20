@@ -6,7 +6,7 @@ The bot takes a structured .CSV file, checks for existing items based on the tit
 
 Please refer to the graph below for an overview of the current ontology model. Note: the TTL behind the rendering is not technically correct as this merely serves as a visualisation.
 
-![Ontology graph](images/LabEL_ontology_V3.png)
+![Ontology graph](images/LabEL_ontology_V4.png)
 _Figure 1: Visualisation of LabEL ontology._
 
 ### Future additions
