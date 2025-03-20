@@ -4,10 +4,12 @@ This project automates item creation and population on [Wikidata](https://www.wi
 
 The bot takes a structured .CSV file, checks for existing items based on the title of the work, creates a new item if none exist, and adds the recorded claims and sources automatically. FFor this reason, it is critical that the data provided to the bot is correct and adheres to [Wikidata policies and guidelines](https://www.wikidata.org/wiki/Wikidata:List_of_policies_and_guidelines), particularly the [notability criterion](https://www.wikidata.org/wiki/Wikidata:Notability).
 
-Please refer to the graph below for an overview of the current ontology model. Note: the TTL behind the rendering is not technically correct as this merely serves as a visualisation.
+Please refer to the graph below for a graph of the current ontology model.
 
-![Ontology graph](images/LabEL_ontology_V4.png)
-_Figure 1: Visualisation of LabEL ontology._
+![Ontology graph](ontology/LabEL_ontology_V4.png)
+_Figure 1: Visualisation of the LabEL ontology._
+
+<u>**Note:**</u> this schema serves to understand the RDF and the TTL logic is not entirely true to the logic within the Wikidata model itself. Properties and their targets are instead represented as classes and subclasses, and some of these nodes have been renamed for clarity.
 
 ### Future additions
 

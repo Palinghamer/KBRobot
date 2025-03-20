@@ -1,0 +1,535 @@
+@prefix : <http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/> .
+
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/Author
+:Author rdf:type owl:ObjectProperty ;
+        rdfs:domain :work ;
+        rdfs:range :author .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/Contributor_to_the_creative_work_or_subject
+:Contributor_to_the_creative_work_or_subject rdf:type owl:ObjectProperty ;
+                                             rdfs:subPropertyOf owl:topObjectProperty ;
+                                             rdfs:domain :work ;
+                                             rdfs:range :contributor .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/Copyright_license
+:Copyright_license rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   rdfs:domain :work ;
+                   rdfs:range :license .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/Distributed_by
+:Distributed_by rdf:type owl:ObjectProperty ;
+                rdfs:domain :work ;
+                rdfs:range :platform .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/Fabrication_method
+:Fabrication_method rdf:type owl:ObjectProperty ;
+                    rdfs:domain :work ;
+                    rdfs:range :fabrication_method .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/Genre
+:Genre rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf owl:topObjectProperty ;
+       rdfs:domain :work ;
+       rdfs:range :genre .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/Language_of_work_name
+:Language_of_work_name rdf:type owl:ObjectProperty ;
+                       rdfs:domain :work ;
+                       rdfs:range :language .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/Main_subject
+:Main_subject rdf:type owl:ObjectProperty ;
+              rdfs:domain :work ;
+              rdfs:range :topic .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/Media_modality
+:Media_modality rdf:type owl:ObjectProperty ;
+                rdfs:domain :work ;
+                rdfs:range :media_modality .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/Presented_in
+:Presented_in rdf:type owl:ObjectProperty ;
+              rdfs:domain :work ;
+              rdfs:range :event .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/Programmed_in
+:Programmed_in rdf:type owl:ObjectProperty ;
+               rdfs:domain :work ;
+               rdfs:range :programming_language .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/Publisher
+:Publisher rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf owl:topObjectProperty ;
+           rdfs:domain :work ;
+           rdfs:range :organisation .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/Software_engine
+:Software_engine rdf:type owl:ObjectProperty ;
+                 rdfs:domain :work ;
+                 rdfs:range :software_engine .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/instance_of
+:instance_of rdf:type owl:ObjectProperty ;
+             rdfs:domain :work ;
+             rdfs:range :instance_of .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/Archive_URL
+:Archive_URL rdf:type owl:DatatypeProperty ;
+             rdfs:domain :work ;
+             rdfs:range xsd:anyURI .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/Description
+:Description rdf:type owl:DatatypeProperty ;
+             rdfs:domain :work ;
+             rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/Publication_date
+:Publication_date rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :work ;
+                  rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/URL
+:URL rdf:type owl:DatatypeProperty ;
+     rdfs:domain :work ;
+     rdfs:range xsd:anyURI .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Adobe_Flash_(Q165658)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Adobe_Flash_(Q165658)> rdf:type owl:Class ;
+                                                                                                        rdfs:subClassOf :software_engine .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Adobe_Shockwave_(Q191865)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Adobe_Shockwave_(Q191865)> rdf:type owl:Class ;
+                                                                                                            rdfs:subClassOf :software_engine .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#App_Store_(Q368215)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#App_Store_(Q368215)> rdf:type owl:Class ;
+                                                                                                      rdfs:subClassOf :platform .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Augmented_reality_(Q254183)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Augmented_reality_(Q254183)> rdf:type owl:Class ;
+                                                                                                              rdfs:subClassOf :fabrication_method .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#CSS_(Q46441)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#CSS_(Q46441)> rdf:type owl:Class ;
+                                                                                               rdfs:subClassOf :programming_language .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Code_poetry_(Q17093921)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Code_poetry_(Q17093921)> rdf:type owl:Class ;
+                                                                                                          rdfs:subClassOf :genre .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Combinatory_literature_(Q85753468)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Combinatory_literature_(Q85753468)> rdf:type owl:Class ;
+                                                                                                                     rdfs:subClassOf :genre .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Concrete_poetry_(Q596594)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Concrete_poetry_(Q596594)> rdf:type owl:Class ;
+                                                                                                            rdfs:subClassOf :genre .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Dutch_(Q7411)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Dutch_(Q7411)> rdf:type owl:Class ;
+                                                                                                rdfs:subClassOf :language .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#English_(Q1860)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#English_(Q1860)> rdf:type owl:Class ;
+                                                                                                  rdfs:subClassOf :language .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Facebook_(Q355)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Facebook_(Q355)> rdf:type owl:Class ;
+                                                                                                  rdfs:subClassOf :platform .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Fiction_(Q8253)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Fiction_(Q8253)> rdf:type owl:Class ;
+                                                                                                  rdfs:subClassOf :genre .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#French_(Q150)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#French_(Q150)> rdf:type owl:Class ;
+                                                                                                rdfs:subClassOf :language .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#GIF_(Q2192)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#GIF_(Q2192)> rdf:type owl:Class ;
+                                                                                              rdfs:subClassOf :fabrication_method .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Game_(Q11410)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Game_(Q11410)> rdf:type owl:Class ;
+                                                                                                rdfs:subClassOf :genre .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Generative_art_(Q1502032)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Generative_art_(Q1502032)> rdf:type owl:Class ;
+                                                                                                            rdfs:subClassOf :genre .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#GitLab_(Q16639197)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#GitLab_(Q16639197)> rdf:type owl:Class ;
+                                                                                                     rdfs:subClassOf :platform .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Google_Play_(Q79576)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Google_Play_(Q79576)> rdf:type owl:Class ;
+                                                                                                       rdfs:subClassOf :platform .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#HTML_(Q8811)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#HTML_(Q8811)> rdf:type owl:Class ;
+                                                                                               rdfs:subClassOf :programming_language .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Instagram_(Q209330)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Instagram_(Q209330)> rdf:type owl:Class ;
+                                                                                                      rdfs:subClassOf :platform .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Interactive_fiction_(Q11431182)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Interactive_fiction_(Q11431182)> rdf:type owl:Class ;
+                                                                                                                  rdfs:subClassOf :genre .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Javascript_(Q2005)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Javascript_(Q2005)> rdf:type owl:Class ;
+                                                                                                     rdfs:subClassOf :programming_language .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Kinetic_art_(Q466521)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Kinetic_art_(Q466521)> rdf:type owl:Class ;
+                                                                                                        rdfs:subClassOf :genre .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#OpenStreetMap_(Q936)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#OpenStreetMap_(Q936)> rdf:type owl:Class ;
+                                                                                                       rdfs:subClassOf :software_engine .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Poetry_(Q482)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Poetry_(Q482)> rdf:type owl:Class ;
+                                                                                                rdfs:subClassOf :genre .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Python_(Q28865)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Python_(Q28865)> rdf:type owl:Class ;
+                                                                                                  rdfs:subClassOf :programming_language .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Spanish_(Q1321)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Spanish_(Q1321)> rdf:type owl:Class ;
+                                                                                                  rdfs:subClassOf :language .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Steam_(Q337535)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Steam_(Q337535)> rdf:type owl:Class ;
+                                                                                                  rdfs:subClassOf :platform .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Twine_(Q15411624)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Twine_(Q15411624)> rdf:type owl:Class ;
+                                                                                                    rdfs:subClassOf :software_engine .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Unity_(Q63966)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Unity_(Q63966)> rdf:type owl:Class ;
+                                                                                                 rdfs:subClassOf :software_engine .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Visual_poetry_(Q2578278)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Visual_poetry_(Q2578278)> rdf:type owl:Class ;
+                                                                                                           rdfs:subClassOf :genre .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Wattpad_(Q7664857)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#Wattpad_(Q7664857)> rdf:type owl:Class ;
+                                                                                                     rdfs:subClassOf :platform .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#WebToon_(Q24836950)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#WebToon_(Q24836950)> rdf:type owl:Class ;
+                                                                                                      rdfs:subClassOf :platform .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#WordPress_(Q13166)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#WordPress_(Q13166)> rdf:type owl:Class ;
+                                                                                                     rdfs:subClassOf :software_engine .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#X_(Q918)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#X_(Q918)> rdf:type owl:Class ;
+                                                                                           rdfs:subClassOf :platform .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#YouTube_(Q866)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#YouTube_(Q866)> rdf:type owl:Class ;
+                                                                                                 rdfs:subClassOf :platform .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#animation_(Q11425)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#animation_(Q11425)> rdf:type owl:Class ;
+                                                                                                     rdfs:subClassOf :fabrication_method .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#audio_recording_(Q3302947)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#audio_recording_(Q3302947)> rdf:type owl:Class ;
+                                                                                                             rdfs:subClassOf :media_modality .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#hyperlinking_(Q114785479)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#hyperlinking_(Q114785479)> rdf:type owl:Class ;
+                                                                                                            rdfs:subClassOf :fabrication_method .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#image_(Q478798)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#image_(Q478798)> rdf:type owl:Class ;
+                                                                                                  rdfs:subClassOf :media_modality .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#itch.io_(Q22905933)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#itch.io_(Q22905933)> rdf:type owl:Class ;
+                                                                                                      rdfs:subClassOf :platform .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#machine_learning_(Q2539)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#machine_learning_(Q2539)> rdf:type owl:Class ;
+                                                                                                           rdfs:subClassOf :fabrication_method .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#map_(Q4006)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#map_(Q4006)> rdf:type owl:Class ;
+                                                                                              rdfs:subClassOf :fabrication_method .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#photography_(Q11633)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#photography_(Q11633)> rdf:type owl:Class ;
+                                                                                                       rdfs:subClassOf :fabrication_method .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#sound_recording_process_(Q5057302)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#sound_recording_process_(Q5057302)> rdf:type owl:Class ;
+                                                                                                                     rdfs:subClassOf :fabrication_method .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#statistical_method_(Q12718609)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#statistical_method_(Q12718609)> rdf:type owl:Class ;
+                                                                                                                 rdfs:subClassOf :fabrication_method .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#text_(Q234460)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#text_(Q234460)> rdf:type owl:Class ;
+                                                                                                 rdfs:subClassOf :media_modality .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#video_(Q98069877)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#video_(Q98069877)> rdf:type owl:Class ;
+                                                                                                    rdfs:subClassOf :media_modality .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#video_recording_(Q34508)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#video_recording_(Q34508)> rdf:type owl:Class ;
+                                                                                                           rdfs:subClassOf :fabrication_method .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#virtual_reality_(Q170519)
+<http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115#virtual_reality_(Q170519)> rdf:type owl:Class ;
+                                                                                                            rdfs:subClassOf :fabrication_method .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/author
+:author rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/blog
+:blog rdf:type owl:Class ;
+      rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/blogpost
+:blogpost rdf:type owl:Class ;
+          rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/contributor
+:contributor rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/electronic_literature
+:electronic_literature rdf:type owl:Class ;
+                       rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/event
+:event rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/fabrication_method
+:fabrication_method rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/game
+:game rdf:type owl:Class ;
+      rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/genre
+:genre rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/installation
+:installation rdf:type owl:Class ;
+              rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/instance_of
+:instance_of rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/language
+:language rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/license
+:license rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/media_modality
+:media_modality rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/mobile_application
+:mobile_application rdf:type owl:Class ;
+                    rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/netprov
+:netprov rdf:type owl:Class ;
+         rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/organisation
+:organisation rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/performance
+:performance rdf:type owl:Class ;
+             rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/platform
+:platform rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/programming_language
+:programming_language rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/projection
+:projection rdf:type owl:Class ;
+            rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/social_media_account
+:social_media_account rdf:type owl:Class ;
+                      rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/social_media_bot
+:social_media_bot rdf:type owl:Class ;
+                  rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/social_media_post
+:social_media_post rdf:type owl:Class ;
+                   rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/software
+:software rdf:type owl:Class ;
+          rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/software_engine
+:software_engine rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/topic
+:topic rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/user-generated_content
+:user-generated_content rdf:type owl:Class ;
+                        rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/video
+:video rdf:type owl:Class ;
+       rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/web_application
+:web_application rdf:type owl:Class ;
+                 rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/webpage
+:webpage rdf:type owl:Class ;
+         rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/website
+:website rdf:type owl:Class ;
+         rdfs:subClassOf :instance_of .
+
+
+###  http://www.semanticweb.org/ilyagoessens/ontologies/2025/2/untitled-ontology-115/work
+:work rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
