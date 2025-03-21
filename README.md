@@ -6,7 +6,7 @@ The bot takes a structured .CSV file, checks for existing items based on the tit
 
 ### Data model
 
-Please refer to the graph below for a graph of the current ontology model.
+Please refer to the graph below for a graph of the current ontology.
 
 ![Ontology graph](ontology/LabEL_ontology_V4.png)
 _Figure 1: Visualisation of the LabEL ontology._
