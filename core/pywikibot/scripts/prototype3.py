@@ -39,7 +39,13 @@ def read_csv_to_df(path):
             col_counts[col] += 1
             new_cols.append(f"{col}_{col_counts[col]}")
     df.columns = new_cols
+
+    # 👇 Fix for FutureWarning: force Wikidata_ID to be string
+    if "Wikidata_ID" in df.columns:
+        df["Wikidata_ID"] = df["Wikidata_ID"].astype(str)
+    
     return df
+
 
 # -------------------------
 # Wikidata API helpers
@@ -95,18 +101,13 @@ def claim_already_exists(item, prop, target_value):
 # -------------------------
 # Add claims to item
 # -------------------------
-def add_claims(site, item_title, row, property_map):
+def add_claims(site, item_id, row, property_map):
     repo = site.data_repository()
-    item_id = check_item_exists(site, item_title)
-    if not item_id:
-        print(f"Item '{item_title}' does not exist. Cannot add claims.")
-        return
-
     item = pywikibot.ItemPage(repo, item_id)
     item.get()
 
     for col in row.index:
-        if col == "Title" or col not in property_map or pd.isna(row[col]):
+        if col in ["Title", "Wikidata_ID"] or col not in property_map or pd.isna(row[col]):
             continue
 
         mapping = property_map[col]
@@ -160,25 +161,13 @@ def add_claims(site, item_title, row, property_map):
         except Exception as e:
             print(f"Error on {col} ({prop}): {e}")
 
-    print(f"Claims added for {item_title}\n")
+    print(f"Finished processing claims for {item_id}\n")
 
 # -------------------------
 # Add sources to claims
 # -------------------------
-def add_sources(site, item_title, row, source_map):
-    """
-    Adds sources to claims on an item using a source map like:
-    {
-        "P149": {"property": "P149", "type": "item"},
-        "P813": {"property": "P813", "type": "date"}
-    }
-    """
+def add_sources(site, item_id, row, source_map):
     repo = site.data_repository()
-    item_id = check_item_exists(site, item_title)
-    if not item_id:
-        print(f"Item '{item_title}' does not exist. Cannot add sources.")
-        return
-
     item = pywikibot.ItemPage(repo, item_id)
     item.get()
 
@@ -202,7 +191,9 @@ def add_sources(site, item_title, row, source_map):
                 source_type = source_info["type"]
                 source_value = row[source_col]
 
-                # Skip if source already exists
+                if pd.isna(source_value):
+                    continue
+
                 for src in existing_sources:
                     if source_prop in src:
                         for s in src[source_prop]:
@@ -218,13 +209,12 @@ def add_sources(site, item_title, row, source_map):
                                         year=dt.year, month=dt.month, day=dt.day
                                     ).toTimestr():
                                         already_present = True
-                            except Exception as e:
+                            except Exception:
                                 continue
 
                 if already_present:
                     continue
 
-                # Build new source claim
                 try:
                     source_claim = pywikibot.Claim(repo, source_prop, is_reference=True)
 
@@ -258,7 +248,7 @@ def add_sources(site, item_title, row, source_map):
             if new_sources and not already_present:
                 try:
                     claim.addSources(new_sources, summary="Adding source(s) to claim.")
-                    print(f"Added sources to claim {claim.getID()} on {item_title}")
+                    print(f"Added sources to claim {claim.getID()} on {item_id}")
                 except Exception as e:
                     print(f"Failed to add sources to claim {claim.getID()}: {e}")
 
@@ -266,12 +256,19 @@ def add_sources(site, item_title, row, source_map):
 # Main loop
 # -------------------------
 def process_csv_and_create_items(df, site, property_map, source_map):
-    for _, row in df.iterrows():
-        title = row["Title"]
-        check_and_create_item(site, title)
-        add_claims(site, title, row, property_map)
-        add_sources(site, title, row, source_map) 
+    for idx, row in df.iterrows():
+        qid = str(row.get("Wikidata_ID")).strip() if "Wikidata_ID" in row else None
 
+        if not qid or not re.match(r"^Q\d+$", qid):
+            title = row["Title"]
+            qid = check_and_create_item(site, title)
+            df.at[idx, "Wikidata_ID"] = qid  # Save QID back into the DataFrame
+
+        add_claims(site, qid, row, property_map)
+        add_sources(site, qid, row, source_map)
+    
+    # Optional: save updated file with QIDs
+    df.to_csv("test_data3.csv", index=False)
 
 # -------------------------
 # Running
