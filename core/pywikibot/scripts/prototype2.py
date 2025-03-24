@@ -9,7 +9,7 @@ import re
 property_map = {
     "P50": {"property": "P50", "type": "string"},             # author (string)
     "P767": {"property": "P767", "type": "string"},           # contributors (string)
-    "P577": {"property": "P577", "type": "date"},             # publication date
+    "P761": {"property": "P761", "type": "date"},             # publication date
     "P145": {"property": "P145", "type": "item"},             # publisher (Q-ID expected)
     "P31": {"property": "P31", "type": "string"},             # URL to item class (string for demo)
     "P31_2": {"property": "P31", "type": "string"},           # another P31
