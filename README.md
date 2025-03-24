@@ -11,7 +11,7 @@ Please refer to the graph below for a graph of the current ontology.
 ![Ontology graph](ontology/LabEL_ontology_V5.png)
 _Figure 1: Visualisation of the LabEL ontology._
 
-<u>**Note:**</u> this schema serves to help understand the data model and does not fully reflect the logic of the actual Wikidata model. Properties and their targets are represented as classes and subclasses rather than items and properties. Some nodes have been renamed for readability.
+<u>**Note:**</u> this schema serves to help understand the data model and does not fully reflect the logic of the actual Wikidata model. Properties and their targets are represented as classes and subclasses rather than items and properties.
 
 ### Upcoming changes
 
