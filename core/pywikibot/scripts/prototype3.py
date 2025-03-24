@@ -46,7 +46,6 @@ def read_csv_to_df(path):
     
     return df
 
-
 # -------------------------
 # Wikidata API helpers
 # -------------------------
@@ -75,10 +74,10 @@ def create_item(site, label_dict):
 def check_and_create_item(site, item_title):
     item_id = check_item_exists(site, item_title)
     if item_id:
-        print(f"Item '{item_title}' exists: {item_id}")
-        return item_id
+        print(f"⚠️ Skipping title '{item_title}' — item already exists as {item_id}, but no QID in CSV.")
+        return None  # <-- Don't trust it, don't use it
     else:
-        print(f"Creating new item for: {item_title}")
+        print(f"✅ Creating new item for: {item_title}")
         labels = {"en": item_title}
         return create_item(site, labels)
 
@@ -262,12 +261,16 @@ def process_csv_and_create_items(df, site, property_map, source_map):
         if not qid or not re.match(r"^Q\d+$", qid):
             title = row["Title"]
             qid = check_and_create_item(site, title)
-            df.at[idx, "Wikidata_ID"] = qid  # Save QID back into the DataFrame
+
+            if not qid:
+                print(f"⏭️ Skipping '{title}' — no QID available.")
+                continue  # Skip this row entirely
+
+            df.at[idx, "Wikidata_ID"] = qid  # Save newly created QID
 
         add_claims(site, qid, row, property_map)
         add_sources(site, qid, row, source_map)
-    
-    # Optional: save updated file with QIDs
+
     df.to_csv("test_data3.csv", index=False)
 
 # -------------------------
