@@ -13,6 +13,7 @@ property_map = {
     "P145": {"property": "P145", "type": "item"},             # publisher (Q-ID expected)
     "P31": {"property": "P31", "type": "string"},             # URL to item class (string for demo)
     "P31_2": {"property": "P31", "type": "string"},           # another P31
+    "P82": {"property": "P82", "type": "item"}                # instance of (item for type of work)
 }
 
 # -------------------------
