@@ -74,7 +74,7 @@ def create_item(site, label_dict):
 def check_and_create_item(site, item_title):
     item_id = check_item_exists(site, item_title)
     if item_id:
-        print(f"⚠️ Skipping title '{item_title}' — item already exists as {item_id}, but no QID in CSV.")
+        print(f"Skipping title '{item_title}' — item already exists as {item_id}, but no QID in CSV.")
         return None  # <-- Don't trust it, don't use it
     else:
         print(f"✅ Creating new item for: {item_title}")
@@ -263,7 +263,7 @@ def process_csv_and_create_items(df, site, property_map, source_map):
             qid = check_and_create_item(site, title)
 
             if not qid:
-                print(f"⏭️ Skipping '{title}' — no QID available.")
+                print(f"Skipping '{title}' — no QID available.")
                 continue  # Skip this row entirely
 
             df.at[idx, "Wikidata_ID"] = qid  # Save newly created QID
