@@ -2,6 +2,32 @@ import pywikibot
 from pywikibot.data import api
 import pandas as pd
 import re
+import os
+import sys
+from datetime import datetime, timedelta
+import time
+
+
+# -------------------------
+# Lock file time-out
+# -------------------------
+LOCK_FILE = "last_run.lock"
+
+def is_recently_run(min_minutes=5):
+    if os.path.exists(LOCK_FILE):
+        with open(LOCK_FILE, "r") as f:
+            try:
+                last_run = datetime.fromisoformat(f.read().strip())
+                if datetime.now() - last_run < timedelta(minutes=min_minutes):
+                    return True
+            except Exception:
+                pass
+    return False
+
+def update_last_run():
+    with open(LOCK_FILE, "w") as f:
+        f.write(datetime.now().isoformat())
+
 
 # -------------------------
 # Property map
@@ -9,11 +35,11 @@ import re
 property_map = {
     "P50": {"property": "P50", "type": "string"},             # author (string)
     "P767": {"property": "P767", "type": "string"},           # contributors (string)
-    "P761": {"property": "P761", "type": "date"},             # publication date
-    "P145": {"property": "P145", "type": "item"},             # publisher (Q-ID expected)
-    "P31": {"property": "P31", "type": "string"},             # URL to item class (string for demo)
+    "P761": {"property": "P761", "type": "date"},             # publication date (date)
+    "P145": {"property": "P145", "type": "item"},             # publisher (item)
+    "P31": {"property": "P31", "type": "string"},             # URL to item class (string)
     "P31_2": {"property": "P31", "type": "string"},           
-    "P82": {"property": "P82", "type": "item"}                # instance of (item for type of work)
+    "P82": {"property": "P82", "type": "item"}                # instance of (item)
 }
 
 # -------------------------
@@ -40,9 +66,8 @@ def read_csv_to_df(path):
             new_cols.append(f"{col}_{col_counts[col]}")
     df.columns = new_cols
 
-    # 👇 Fix for FutureWarning: force Wikidata_ID to be string
-    if "Wikidata_ID" in df.columns:
-        df["Wikidata_ID"] = df["Wikidata_ID"].astype(str)
+    if "QID" in df.columns:
+        df["QID"] = df["QID"].astype(str)
     
     return df
 
@@ -71,15 +96,41 @@ def create_item(site, label_dict):
     new_item.editLabels(labels=label_dict, summary="Creating a new item.")
     return new_item.getID()
 
+import time  # make sure this is imported at the top
+
+def wait_for_item_to_be_searchable(site, label, max_wait=600, interval=60):
+    """
+    Wait for a newly created item to appear in the wbsearchentities index.
+    max_wait: total time to wait in seconds
+    interval: how often to retry
+    """
+    waited = 0
+    while waited < max_wait:
+        found_id = check_item_exists(site, label)
+        if found_id:
+            print(f"Item '{label}' is now indexed as {found_id}. Continuing...")
+            return True
+        print(f"Item '{label}' not yet indexed. Waiting {interval}s...")
+        time.sleep(interval)
+        waited += interval
+    print(f"Timeout: Item '{label}' still not indexed after {max_wait} seconds.")
+    return False
+
+
 def check_and_create_item(site, item_title):
     item_id = check_item_exists(site, item_title)
     if item_id:
         print(f"Skipping title '{item_title}' — item already exists as {item_id}, but no QID in CSV.")
-        return None  # <-- Don't trust it, don't use it
+        return None
     else:
-        print(f"✅ Creating new item for: {item_title}")
+        print(f"Creating new item for: {item_title}")
         labels = {"en": item_title}
-        return create_item(site, labels)
+        new_id = create_item(site, labels)
+
+        # Wait until it's indexed
+        wait_for_item_to_be_searchable(site, item_title)
+        return new_id
+
 
 def claim_already_exists(item, prop, target_value):
     """
@@ -97,6 +148,37 @@ def claim_already_exists(item, prop, target_value):
 
     return False
 
+def set_descriptions(site, item_id, row):
+    """
+    Sets descriptions for a given item based on the row data.
+    Only updates if the description differs from what's already on Wikidata.
+    """
+    repo = site.data_repository()
+    item = pywikibot.ItemPage(repo, item_id)
+    item.get(force=True)  # Ensure fresh data
+
+    new_descriptions = {}
+
+    for col in row.index:
+        match = re.match(r"[Dd]escription_(\w+)", col)
+        if match:
+            lang = match.group(1)
+            new_desc = str(row[col]).strip()
+            if pd.notna(new_desc) and new_desc:
+                current_desc = item.descriptions.get(lang, "")
+                if new_desc != current_desc:
+                    new_descriptions[lang] = new_desc
+
+    if new_descriptions:
+        try:
+            item.editDescriptions(new_descriptions, summary="Setting/updating item descriptions.")
+            print(f"Descriptions updated for {item_id}: {new_descriptions}")
+        except Exception as e:
+            print(f"Failed to set descriptions for {item_id}: {e}")
+    else:
+        print(f"No description changes needed for {item_id}.")
+
+
 # -------------------------
 # Add claims to item
 # -------------------------
@@ -106,7 +188,7 @@ def add_claims(site, item_id, row, property_map):
     item.get()
 
     for col in row.index:
-        if col in ["Title", "Wikidata_ID"] or col not in property_map or pd.isna(row[col]):
+        if col in ["Title", "QID"] or col not in property_map or pd.isna(row[col]):
             continue
 
         mapping = property_map[col]
@@ -256,7 +338,7 @@ def add_sources(site, item_id, row, source_map):
 # -------------------------
 def process_csv_and_create_items(df, site, property_map, source_map):
     for idx, row in df.iterrows():
-        qid = str(row.get("Wikidata_ID")).strip() if "Wikidata_ID" in row else None
+        qid = str(row.get("QID")).strip() if "QID" in row else None
 
         if not qid or not re.match(r"^Q\d+$", qid):
             title = row["Title"]
@@ -264,19 +346,26 @@ def process_csv_and_create_items(df, site, property_map, source_map):
 
             if not qid:
                 print(f"Skipping '{title}' — no QID available.")
-                continue  # Skip this row entirely
+                continue
 
-            df.at[idx, "Wikidata_ID"] = qid  # Save newly created QID
+            df.at[idx, "QID"] = qid
+            df.to_csv("test_data3.csv", index=False)  # <-- immediately save
 
         add_claims(site, qid, row, property_map)
+        set_descriptions(site, qid, row)
         add_sources(site, qid, row, source_map)
 
-    df.to_csv("test_data3.csv", index=False)
 
 # -------------------------
 # Running
 # -------------------------
 if __name__ == "__main__":
+    if is_recently_run(min_minutes=1):
+        print("Script ran recently. Please wait 5 minutes before running it again.")
+        sys.exit(1)
+
+    update_last_run()
+
     df = read_csv_to_df("test_data3.csv")
     site = pywikibot.Site("test", "wikidata")
-process_csv_and_create_items(df, site, property_map, source_map) 
+    process_csv_and_create_items(df, site, property_map, source_map)
