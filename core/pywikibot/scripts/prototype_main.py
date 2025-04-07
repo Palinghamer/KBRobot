@@ -6,7 +6,34 @@ import os
 import sys
 from datetime import datetime, timedelta
 import time
+import logging
 
+# -------------------------
+# Logging Setup
+# -------------------------
+
+# Get the directory of this script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Navigate up to the pywiki root
+pywiki_root = os.path.abspath(os.path.join(script_dir, "..", "..", ".."))
+
+# Define the logs directory path
+logs_dir = os.path.join(pywiki_root, "logs")
+os.makedirs(logs_dir, exist_ok=True)
+
+# Log file name with timestamp
+log_filename = os.path.join(logs_dir, f"wikidata_upload_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log")
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler(log_filename),
+        logging.StreamHandler()
+    ]
+)
 
 # -------------------------
 # Lock file time-out
@@ -28,25 +55,24 @@ def update_last_run():
     with open(LOCK_FILE, "w") as f:
         f.write(datetime.now().isoformat())
 
-
 # -------------------------
 # Property map
 # -------------------------
 property_map = {
-    "P50": {"property": "P50", "type": "string"},             # author (string)
-    "P767": {"property": "P767", "type": "string"},           # contributors (string)
-    "P761": {"property": "P761", "type": "date"},             # publication date (date)
-    "P145": {"property": "P145", "type": "item"},             # publisher (item)
-    "P31": {"property": "P31", "type": "string"},             # URL to item class (string)
-    "P31_2": {"property": "P31", "type": "string"},           
-    "P82": {"property": "P82", "type": "item"}                # instance of (item)
+    "P50": {"property": "P50", "type": "string"},
+    "P767": {"property": "P767", "type": "string"},
+    "P761": {"property": "P761", "type": "date"},
+    "P145": {"property": "P145", "type": "item"},
+    "P31": {"property": "P31", "type": "string"},
+    "P31_2": {"property": "P31", "type": "string"},
+    "P82": {"property": "P82", "type": "item"}
 }
 
 # -------------------------
 # Source map
 # -------------------------
 source_map = {
-    "P149": {"property": "P149", "type": "item", "targets": ["P82"]},  # add LabEL as source to instance of
+    "P149": {"property": "P149", "type": "item", "targets": ["P82"]},
 }
 
 # -------------------------
@@ -54,7 +80,7 @@ source_map = {
 # -------------------------
 def read_csv_to_df(path):
     df = pd.read_csv(path)
-    df.columns = [col.split()[0] if "(" in col else col for col in df.columns]  # Strip labels
+    df.columns = [col.split()[0] if "(" in col else col for col in df.columns]
     col_counts = {}
     new_cols = []
     for col in df.columns:
@@ -68,7 +94,7 @@ def read_csv_to_df(path):
 
     if "QID" in df.columns:
         df["QID"] = df["QID"].astype(str)
-    
+
     return df
 
 # -------------------------
@@ -96,47 +122,33 @@ def create_item(site, label_dict):
     new_item.editLabels(labels=label_dict, summary="Creating a new item.")
     return new_item.getID()
 
-import time  # make sure this is imported at the top
-
 def wait_for_item_to_be_searchable(site, label, max_wait=600, interval=60):
-    """
-    Wait for a newly created item to appear in the wbsearchentities index.
-    max_wait: total time to wait in seconds
-    interval: how often to retry
-    """
     waited = 0
     while waited < max_wait:
         found_id = check_item_exists(site, label)
         if found_id:
-            print(f"Item '{label}' is now indexed as {found_id}. Continuing...")
+            logging.info(f"Item '{label}' is now indexed as {found_id}. Continuing...")
             return True
-        print(f"Item '{label}' not yet indexed. Waiting {interval}s...")
+        logging.info(f"Item '{label}' not yet indexed. Waiting {interval}s...")
         time.sleep(interval)
         waited += interval
-    print(f"Timeout: Item '{label}' still not indexed after {max_wait} seconds.")
+    logging.warning(f"Timeout: Item '{label}' still not indexed after {max_wait} seconds.")
     return False
-
 
 def check_and_create_item(site, item_title):
     item_id = check_item_exists(site, item_title)
     if item_id:
-        print(f"Skipping title '{item_title}' — item already exists as {item_id}, but no QID in CSV.")
+        logging.info(f"Skipping title '{item_title}' — item already exists as {item_id}, but no QID in CSV.")
         return None
     else:
-        print(f"Creating new item for: {item_title}")
+        logging.info(f"Creating new item for: {item_title}")
         labels = {"en": item_title}
         new_id = create_item(site, labels)
-
-        # Wait until it's indexed
         wait_for_item_to_be_searchable(site, item_title)
         return new_id
 
 def claim_already_exists(item, prop, target_value):
-    """
-    Checks whether a claim with the given property and target already exists.
-    """
     existing_claims = item.claims.get(prop, [])
-
     for claim in existing_claims:
         if isinstance(target_value, pywikibot.ItemPage) and claim.getTarget().id == target_value.id:
             return True
@@ -144,20 +156,14 @@ def claim_already_exists(item, prop, target_value):
             return True
         elif isinstance(target_value, pywikibot.WbTime) and claim.getTarget().toTimestr() == target_value.toTimestr():
             return True
-
     return False
 
 def set_descriptions(site, item_id, row):
-    """
-    Sets descriptions for a given item based on the row data.
-    Only updates if the description differs from what's already on Wikidata.
-    """
     repo = site.data_repository()
     item = pywikibot.ItemPage(repo, item_id)
-    item.get(force=True)  # Ensure fresh data
+    item.get(force=True)
 
     new_descriptions = {}
-
     for col in row.index:
         match = re.match(r"[Dd]escription_(\w+)", col)
         if match:
@@ -171,11 +177,11 @@ def set_descriptions(site, item_id, row):
     if new_descriptions:
         try:
             item.editDescriptions(new_descriptions, summary="Setting/updating item descriptions.")
-            print(f"Descriptions updated for {item_id}: {new_descriptions}")
+            logging.info(f"Descriptions updated for {item_id}: {new_descriptions}")
         except Exception as e:
-            print(f"Failed to set descriptions for {item_id}: {e}")
+            logging.error(f"Failed to set descriptions for {item_id}: {e}")
     else:
-        print(f"No description changes needed for {item_id}.")
+        logging.info(f"No description changes needed for {item_id}.")
 
 def source_bundle_exists(existing_sources, new_sources):
     for existing in existing_sources:
@@ -195,9 +201,6 @@ def source_bundle_exists(existing_sources, new_sources):
             return True
     return False
 
-# -------------------------
-# Add claims to item
-# -------------------------
 def add_claims(site, item_id, row, property_map):
     repo = site.data_repository()
     item = pywikibot.ItemPage(repo, item_id)
@@ -220,18 +223,18 @@ def add_claims(site, item_id, row, property_map):
                     target.get()
 
                     if claim_already_exists(item, prop, target):
-                        print(f"Claim {prop} -> {target.id} already exists. Skipping.")
+                        logging.info(f"Claim {prop} -> {target.id} already exists. Skipping.")
                         continue
 
                     claim = pywikibot.Claim(repo, prop)
                     claim.setTarget(target)
                     item.addClaim(claim, summary=f"Adding item claim {prop} -> {target.id}")
                 else:
-                    print(f"Skipping {col}: No QID in value '{value}'")
+                    logging.warning(f"Skipping {col}: No QID in value '{value}'")
 
             elif val_type == "string":
                 if claim_already_exists(item, prop, str(value)):
-                    print(f"Claim {prop} -> '{value}' already exists. Skipping.")
+                    logging.info(f"Claim {prop} -> '{value}' already exists. Skipping.")
                     continue
 
                 claim = pywikibot.Claim(repo, prop)
@@ -246,23 +249,20 @@ def add_claims(site, item_id, row, property_map):
                     )
 
                     if claim_already_exists(item, prop, date_target):
-                        print(f"Date claim {prop} -> {parsed.date()} already exists. Skipping.")
+                        logging.info(f"Date claim {prop} -> {parsed.date()} already exists. Skipping.")
                         continue
 
                     dateclaim = pywikibot.Claim(repo, prop)
                     dateclaim.setTarget(date_target)
                     item.addClaim(dateclaim, summary=f"Adding date claim {prop} -> {parsed.date()}")
                 else:
-                    print(f"Invalid date for {prop}: {value}")
+                    logging.warning(f"Invalid date for {prop}: {value}")
 
         except Exception as e:
-            print(f"Error on {col} ({prop}): {e}")
+            logging.error(f"Error on {col} ({prop}): {e}")
 
-    print(f"Finished processing claims for {item_id}\n")
+    logging.info(f"Finished processing claims for {item_id}")
 
-# -------------------------
-# Add sources to claims
-# -------------------------
 def add_sources(site, item_id, row, source_map):
     repo = site.data_repository()
     item = pywikibot.ItemPage(repo, item_id)
@@ -273,7 +273,7 @@ def add_sources(site, item_id, row, source_map):
             try:
                 existing_sources = claim.getSources()
             except Exception as e:
-                print(f"Could not get sources for claim {claim}: {e}")
+                logging.warning(f"Could not get sources for claim {claim}: {e}")
                 continue
 
             new_sources = []
@@ -300,39 +300,36 @@ def add_sources(site, item_id, row, source_map):
                             target.get()
                             source_claim.setTarget(target)
                         else:
-                            print(f"Invalid Q-ID for source in column {source_col}: {source_value}")
+                            logging.warning(f"Invalid Q-ID for source in column {source_col}: {source_value}")
                             continue
                     elif source_type == "string":
                         source_claim.setTarget(str(source_value))
                     elif source_type == "date":
                         dt = pd.to_datetime(source_value, errors="coerce")
                         if pd.isna(dt):
-                            print(f"Invalid date for source in column {source_col}: {source_value}")
+                            logging.warning(f"Invalid date for source in column {source_col}: {source_value}")
                             continue
                         date_target = pywikibot.WbTime(year=dt.year, month=dt.month, day=dt.day)
                         source_claim.setTarget(date_target)
                     else:
-                        print(f"Unsupported source type '{source_type}' for {source_prop}")
+                        logging.warning(f"Unsupported source type '{source_type}' for {source_prop}")
                         continue
 
                     new_sources.append(source_claim)
 
                 except Exception as e:
-                    print(f"Error building source claim for {source_col}: {e}")
-                    
+                    logging.error(f"Error building source claim for {source_col}: {e}")
+
             if new_sources:
                 if source_bundle_exists(existing_sources, new_sources):
-                    print(f"Source(s) already exist for claim {claim.getID()} on {item_id}. Skipping.")
+                    logging.info(f"Source(s) already exist for claim {claim.getID()} on {item_id}. Skipping.")
                     continue
                 try:
                     claim.addSources(new_sources, summary="Adding source(s) to claim.")
-                    print(f"Added sources to claim {claim.getID()} on {item_id}")
+                    logging.info(f"Added sources to claim {claim.getID()} on {item_id}")
                 except Exception as e:
-                    print(f"Failed to add sources to claim {claim.getID()}: {e}")
+                    logging.error(f"Failed to add sources to claim {claim.getID()}: {e}")
 
-# -------------------------
-# Main loop
-# -------------------------
 def process_csv_and_create_items(df, site, property_map, source_map):
     for idx, row in df.iterrows():
         qid = str(row.get("QID")).strip() if "QID" in row else None
@@ -342,27 +339,23 @@ def process_csv_and_create_items(df, site, property_map, source_map):
             qid = check_and_create_item(site, title)
 
             if not qid:
-                print(f"Skipping '{title}' — no QID available.")
+                logging.warning(f"Skipping '{title}' — no QID available.")
                 continue
 
             df.at[idx, "QID"] = qid
-            df.to_csv("test_data3.csv", index=False)  # <-- immediately save
+            df.to_csv("test_data3.csv", index=False)
 
         add_claims(site, qid, row, property_map)
         set_descriptions(site, qid, row)
         add_sources(site, qid, row, source_map)
 
-
-# -------------------------
-# Running
-# -------------------------
 if __name__ == "__main__":
-    if is_recently_run(min_minutes=1):
-        print("Script ran recently. Please wait 5 minutes before running it again.")
+    if is_recently_run(min_minutes=0):
+        logging.warning("Script ran recently. Please wait 5 minutes before running it again.")
         sys.exit(1)
 
     update_last_run()
-
     df = read_csv_to_df("test_data3.csv")
     site = pywikibot.Site("test", "wikidata")
     process_csv_and_create_items(df, site, property_map, source_map)
+    logging.info("Script completed successfully.")
