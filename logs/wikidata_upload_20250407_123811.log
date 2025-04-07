@@ -1,0 +1,27 @@
+2025-04-07 12:38:12,163 - INFO - [Q239113] Aphorisms about Birds II - Item already exists, skipping creation.
+2025-04-07 12:38:12,163 - WARNING - [no QID] Aphorisms about Birds II - Skipping — no QID available.
+2025-04-07 12:38:12,906 - INFO - [Q239114] Aphorisms about Birds III - Claim P82 -> Q215175 already exists. Skipping.
+2025-04-07 12:38:12,914 - INFO - [Q239114] Aphorisms about Birds III - Date claim P761 -> 2000-01-01 already exists. Skipping.
+2025-04-07 12:38:13,753 - INFO - [Q239114] Aphorisms about Birds III - Claim P145 -> Q234514 already exists. Skipping.
+2025-04-07 12:38:13,753 - INFO - [Q239114] Aphorisms about Birds III - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 12:38:13,754 - INFO - [Q239114] Aphorisms about Birds III - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 12:38:13,754 - INFO - [Q239114] Aphorisms about Birds III - Finished processing claims
+2025-04-07 12:38:14,140 - INFO - [Q239114] Aphorisms about Birds III - No description changes needed.
+2025-04-07 12:38:14,697 - INFO - [Q239114] Aphorisms about Birds III - Source(s) already exist for claim P82. Skipping.
+2025-04-07 12:38:15,386 - INFO - [Q239184] Aphorisms about Birds IV - Claim P82 -> Q215175 already exists. Skipping.
+2025-04-07 12:38:15,391 - INFO - [Q239184] Aphorisms about Birds IV - Date claim P761 -> 2000-01-01 already exists. Skipping.
+2025-04-07 12:38:15,694 - INFO - [Q239184] Aphorisms about Birds IV - Claim P145 -> Q234514 already exists. Skipping.
+2025-04-07 12:38:15,694 - INFO - [Q239184] Aphorisms about Birds IV - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 12:38:15,695 - INFO - [Q239184] Aphorisms about Birds IV - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 12:38:15,695 - INFO - [Q239184] Aphorisms about Birds IV - Finished processing claims
+2025-04-07 12:38:15,995 - INFO - [Q239184] Aphorisms about Birds IV - No description changes needed.
+2025-04-07 12:38:16,598 - INFO - [Q239184] Aphorisms about Birds IV - Source(s) already exist for claim P82. Skipping.
+2025-04-07 12:38:17,178 - INFO - [Q239185] Aphorisms about Birds V - Claim P82 -> Q215175 already exists. Skipping.
+2025-04-07 12:38:17,181 - INFO - [Q239185] Aphorisms about Birds V - Date claim P761 -> 2000-01-01 already exists. Skipping.
+2025-04-07 12:38:17,513 - INFO - [Q239185] Aphorisms about Birds V - Claim P145 -> Q234514 already exists. Skipping.
+2025-04-07 12:38:17,514 - INFO - [Q239185] Aphorisms about Birds V - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 12:38:17,514 - INFO - [Q239185] Aphorisms about Birds V - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 12:38:17,514 - INFO - [Q239185] Aphorisms about Birds V - Finished processing claims
+2025-04-07 12:38:17,951 - INFO - [Q239185] Aphorisms about Birds V - No description changes needed.
+2025-04-07 12:38:18,585 - INFO - [Q239185] Aphorisms about Birds V - Source(s) already exist for claim P82. Skipping.
+2025-04-07 12:38:18,586 - INFO - Script completed successfully.

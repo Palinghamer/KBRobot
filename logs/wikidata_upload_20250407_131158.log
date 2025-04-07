@@ -1,0 +1,40 @@
+2025-04-07 13:12:09,081 - INFO - [Q239198] Maxims about Mammals II - Created new item with QID Q239198.
+2025-04-07 13:12:09,313 - INFO - [Q239198] Maxims about Mammals II - not yet indexed. Waiting 60seconds...
+2025-04-07 13:13:09,618 - INFO - [Q239198] Maxims about Mammals II - not yet indexed. Waiting 60seconds...
+2025-04-07 13:14:09,903 - INFO - [Q239198] Maxims about Mammals II - not yet indexed. Waiting 60seconds...
+2025-04-07 13:15:10,208 - INFO - [Q239198] Maxims about Mammals II - not yet indexed. Waiting 60seconds...
+2025-04-07 13:16:10,501 - INFO - [Q239198] Maxims about Mammals II - not yet indexed. Waiting 60seconds...
+2025-04-07 13:17:10,856 - INFO - [Q239198] Maxims about Mammals II - not yet indexed. Waiting 60seconds...
+2025-04-07 13:18:11,127 - INFO - [Q239198] Maxims about Mammals II - is now indexed as Q239198. Continuing.
+2025-04-07 13:18:42,537 - INFO - [Q239198] Maxims about Mammals II - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 13:18:42,538 - INFO - [Q239198] Maxims about Mammals II - Finished processing claims
+2025-04-07 13:18:52,426 - INFO - [Q239198] Maxims about Mammals II - Descriptions updated: {'en': 'Maxims about Mammals is a book containing sayings about mammals.', 'de': 'Maxims about Mammals ist ein Buch mit Sprüchen über Säugetiere.'}
+2025-04-07 13:19:52,442 - ERROR - [Q239198] Maxims about Mammals II - Failed to add sources to claim P82: editconflict: Edit conflict. Could not patch the current revision.
+[messages: [{'name': 'wikibase-api-editconflict', 'parameters': [], 'html': {'*': 'Edit conflict. Could not patch the current revision.'}}, {'name': 'edit-conflict', 'parameters': [], 'html': {'*': 'Edit conflict.'}}];
+ servedby: mw-api-ext.eqiad.main-6978d947bc-9jwcr;
+ help: See https://test.wikidata.org/w/api.php for API usage. Subscribe to the mediawiki-api-announce mailing list at &lt;https://lists.wikimedia.org/postorius/lists/mediawiki-api-announce.lists.wikimedia.org/&gt; for notice of API deprecations and breaking changes.]
+2025-04-07 13:19:52,971 - INFO - [Q239114] Maxims about Mammals III - Claim P82 -> Q215175 already exists. Skipping.
+2025-04-07 13:19:52,983 - INFO - [Q239114] Maxims about Mammals III - Date claim P761 -> 2000-01-01 already exists. Skipping.
+2025-04-07 13:19:53,333 - INFO - [Q239114] Maxims about Mammals III - Claim P145 -> Q234514 already exists. Skipping.
+2025-04-07 13:19:53,333 - INFO - [Q239114] Maxims about Mammals III - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 13:19:53,334 - INFO - [Q239114] Maxims about Mammals III - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 13:19:53,334 - INFO - [Q239114] Maxims about Mammals III - Finished processing claims
+2025-04-07 13:20:02,460 - INFO - [Q239114] Maxims about Mammals III - Descriptions updated: {'en': 'Maxims about Mammals is a book containing sayings about mammals.', 'de': 'Maxims about Mammals ist ein Buch mit Sprüchen über Säugetiere.'}
+2025-04-07 13:20:02,971 - WARNING - [Q239114] Maxims about Mammals III - Source(s) already exist for claim P82. Skipping. Please verify manually if required. 
+2025-04-07 13:20:03,570 - INFO - [Q239184] Maxims about Mammals IV - Claim P82 -> Q215175 already exists. Skipping.
+2025-04-07 13:20:03,572 - INFO - [Q239184] Maxims about Mammals IV - Date claim P761 -> 2000-01-01 already exists. Skipping.
+2025-04-07 13:20:03,774 - INFO - [Q239184] Maxims about Mammals IV - Claim P145 -> Q234514 already exists. Skipping.
+2025-04-07 13:20:03,775 - INFO - [Q239184] Maxims about Mammals IV - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 13:20:03,775 - INFO - [Q239184] Maxims about Mammals IV - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 13:20:03,775 - INFO - [Q239184] Maxims about Mammals IV - Finished processing claims
+2025-04-07 13:20:12,445 - INFO - [Q239184] Maxims about Mammals IV - Descriptions updated: {'en': 'Maxims about Mammals is a book containing sayings about mammals.', 'de': 'Maxims about Mammals ist ein Buch mit Sprüchen über Säugetiere.'}
+2025-04-07 13:20:12,946 - WARNING - [Q239184] Maxims about Mammals IV - Source(s) already exist for claim P82. Skipping. Please verify manually if required. 
+2025-04-07 13:20:13,418 - INFO - [Q239185] Maxims about Mammalss V - Claim P82 -> Q215175 already exists. Skipping.
+2025-04-07 13:20:13,424 - INFO - [Q239185] Maxims about Mammalss V - Date claim P761 -> 2000-01-01 already exists. Skipping.
+2025-04-07 13:20:13,737 - INFO - [Q239185] Maxims about Mammalss V - Claim P145 -> Q234514 already exists. Skipping.
+2025-04-07 13:20:13,738 - INFO - [Q239185] Maxims about Mammalss V - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 13:20:13,738 - INFO - [Q239185] Maxims about Mammalss V - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 13:20:13,738 - INFO - [Q239185] Maxims about Mammalss V - Finished processing claims
+2025-04-07 13:20:22,367 - INFO - [Q239185] Maxims about Mammalss V - Descriptions updated: {'en': 'Maxims about Mammals is a book containing sayings about mammals.', 'de': 'Maxims about Mammals ist ein Buch mit Sprüchen über Säugetiere.'}
+2025-04-07 13:20:22,769 - WARNING - [Q239185] Maxims about Mammalss V - Source(s) already exist for claim P82. Skipping. Please verify manually if required. 
+2025-04-07 13:20:22,770 - INFO - Script completed successfully.

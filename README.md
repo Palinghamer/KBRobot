@@ -20,6 +20,6 @@ _Figure 1: Visualisation of the LabEL ontology._
 - [x] Support for dates
 - [x] Support for QID checks
 - [x] Support for sources
-- [ ] Change logs
+- [x] Change logs
 - [ ] Guidelines for structured data entry
 - [ ] Documentation for scripts & pywikibot

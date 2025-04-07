@@ -1,0 +1,27 @@
+2025-04-07 12:14:31,158 - INFO - Skipping title 'Aphorisms about Birds II' — item already exists as Q239113, but no QID in CSV.
+2025-04-07 12:14:31,158 - WARNING - Skipping 'Aphorisms about Birds II' — no QID available.
+2025-04-07 12:14:31,754 - INFO - Claim P82 -> Q215175 already exists. Skipping.
+2025-04-07 12:14:31,761 - INFO - Date claim P761 -> 2000-01-01 already exists. Skipping.
+2025-04-07 12:14:32,231 - INFO - Claim P145 -> Q234514 already exists. Skipping.
+2025-04-07 12:14:32,232 - INFO - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 12:14:32,232 - INFO - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 12:14:32,232 - INFO - Finished processing claims for Q239114
+2025-04-07 12:14:32,560 - INFO - No description changes needed for Q239114.
+2025-04-07 12:14:33,083 - INFO - Source(s) already exist for claim P82 on Q239114. Skipping.
+2025-04-07 12:14:33,513 - INFO - Claim P82 -> Q215175 already exists. Skipping.
+2025-04-07 12:14:33,515 - INFO - Date claim P761 -> 2000-01-01 already exists. Skipping.
+2025-04-07 12:14:33,917 - INFO - Claim P145 -> Q234514 already exists. Skipping.
+2025-04-07 12:14:33,917 - INFO - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 12:14:33,918 - INFO - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 12:14:33,918 - INFO - Finished processing claims for Q239184
+2025-04-07 12:14:34,199 - INFO - No description changes needed for Q239184.
+2025-04-07 12:14:34,734 - INFO - Source(s) already exist for claim P82 on Q239184. Skipping.
+2025-04-07 12:14:35,176 - INFO - Claim P82 -> Q215175 already exists. Skipping.
+2025-04-07 12:14:35,177 - INFO - Date claim P761 -> 2000-01-01 already exists. Skipping.
+2025-04-07 12:14:35,416 - INFO - Claim P145 -> Q234514 already exists. Skipping.
+2025-04-07 12:14:35,417 - INFO - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 12:14:35,417 - INFO - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-07 12:14:35,417 - INFO - Finished processing claims for Q239185
+2025-04-07 12:14:36,534 - INFO - No description changes needed for Q239185.
+2025-04-07 12:14:37,040 - INFO - Source(s) already exist for claim P82 on Q239185. Skipping.
+2025-04-07 12:14:37,040 - INFO - Script completed successfully.
