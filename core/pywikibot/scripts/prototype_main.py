@@ -131,7 +131,6 @@ def check_and_create_item(site, item_title):
         wait_for_item_to_be_searchable(site, item_title)
         return new_id
 
-
 def claim_already_exists(item, prop, target_value):
     """
     Checks whether a claim with the given property and target already exists.
@@ -178,6 +177,23 @@ def set_descriptions(site, item_id, row):
     else:
         print(f"No description changes needed for {item_id}.")
 
+def source_bundle_exists(existing_sources, new_sources):
+    for existing in existing_sources:
+        match_count = 0
+        for new in new_sources:
+            prop = new.getID()
+            if prop not in existing:
+                break
+            found = False
+            for existing_claim in existing[prop]:
+                if new.getTarget() == existing_claim.getTarget():
+                    found = True
+                    break
+            if found:
+                match_count += 1
+        if match_count == len(new_sources):
+            return True
+    return False
 
 # -------------------------
 # Add claims to item
@@ -325,8 +341,11 @@ def add_sources(site, item_id, row, source_map):
 
                 except Exception as e:
                     print(f"Error building source claim for {source_col}: {e}")
-
-            if new_sources and not already_present:
+                    
+            if new_sources:
+                if source_bundle_exists(existing_sources, new_sources):
+                    print(f"Source(s) already exist for claim {claim.getID()} on {item_id}. Skipping.")
+                    continue
                 try:
                     claim.addSources(new_sources, summary="Adding source(s) to claim.")
                     print(f"Added sources to claim {claim.getID()} on {item_id}")

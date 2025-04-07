@@ -18,6 +18,8 @@ _Figure 1: Visualisation of the LabEL ontology._
 ### Upcoming changes
 
 - [x] Support for dates
-- [ ] Logging changes made
+- [x] Support for QID checks
+- [x] Support for sources
+- [ ] Change logs
 - [ ] Guidelines for structured data entry
 - [ ] Documentation for scripts & pywikibot
