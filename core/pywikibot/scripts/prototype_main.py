@@ -277,7 +277,6 @@ def add_sources(site, item_id, row, source_map):
                 continue
 
             new_sources = []
-            already_present = False
 
             for source_col, source_info in source_map.items():
                 target_props = source_info.get("targets")
@@ -289,27 +288,6 @@ def add_sources(site, item_id, row, source_map):
                 source_value = row[source_col]
 
                 if pd.isna(source_value):
-                    continue
-
-                for src in existing_sources:
-                    if source_prop in src:
-                        for s in src[source_prop]:
-                            try:
-                                if source_type == "item" and isinstance(s.getTarget(), pywikibot.ItemPage):
-                                    if s.getTarget().id == source_value:
-                                        already_present = True
-                                elif source_type == "string" and s.getTarget() == str(source_value):
-                                    already_present = True
-                                elif source_type == "date" and isinstance(s.getTarget(), pywikibot.WbTime):
-                                    dt = pd.to_datetime(source_value, errors="coerce")
-                                    if dt and s.getTarget().toTimestr() == pywikibot.WbTime(
-                                        year=dt.year, month=dt.month, day=dt.day
-                                    ).toTimestr():
-                                        already_present = True
-                            except Exception:
-                                continue
-
-                if already_present:
                     continue
 
                 try:
