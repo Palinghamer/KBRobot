@@ -21,5 +21,6 @@ _Figure 1: Visualisation of the LabEL ontology._
 - [x] Support for QID checks
 - [x] Support for sources
 - [x] Change logs
+- [ ] Modularisation of script
 - [ ] Guidelines for structured data entry
 - [ ] Documentation for scripts & pywikibot
