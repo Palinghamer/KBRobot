@@ -1,0 +1,11 @@
+2025-04-11 15:06:01,468 - INFO - [Q239198] Maxims about Mammals II - No description updates needed.
+2025-04-11 15:06:02,052 - WARNING - [Q239199] Maxims about Mammals III - Item already exists.
+2025-04-11 15:06:02,052 - WARNING - [no QID] Maxims about Mammals III - No QID, skipping.
+2025-04-11 15:06:02,878 - INFO - [Q239184] Maxims about Mammals IV - No description updates needed.
+2025-04-11 15:06:04,456 - INFO - [Q239185] Maxims about Mammals V - No description updates needed.
+2025-04-11 15:06:05,860 - INFO - [Q239222] Maxims about Mammals VI - No description updates needed.
+2025-04-11 15:06:06,601 - INFO - Saved summary CSV: /Users/ilyagoessens/Desktop/digital humanities/kbr internship/pywiki/logs/summary_log.csv
+2025-04-11 15:06:06,601 - INFO - Script finished.
+2025-04-11 15:06:06,602 - INFO - Processed: 5, Created: 0, Skipped: 1
+2025-04-11 15:06:06,602 - INFO - Claims Added: 0, Claims Skipped: 21
+2025-04-11 15:06:06,602 - INFO - Sources Added: 0, Sources Skipped: 7

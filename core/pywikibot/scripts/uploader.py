@@ -20,8 +20,9 @@ class WikidataUploader:
             "sources_added": 0,
             "sources_skipped": 0
         }
+        self.change_log = []
 
-    def log_with_item(self, title, item_id=None, level="info", message=""):
+    def log_with_item(self, title, item_id=None, level="warning", message=""):
         prefix = f"[{item_id if item_id else 'no QID'}] {title} -"
         full_message = f"{prefix} {message}"
         getattr(self.logger, level)(full_message)
@@ -49,16 +50,25 @@ class WikidataUploader:
     def create_item(self, label_dict):
         new_item = pywikibot.ItemPage(self.site)
         new_item.editLabels(labels=label_dict, summary="Creating a new item.")
-        return new_item.getID()
+        new_id = new_item.getID()
+        self.change_log.append({
+            "Title": label_dict.get("en", ""),
+            "QID": new_id,
+            "Type": "Item",
+            "Action": "Created",
+            "Property": "",
+            "Value": ""
+        })
+        return new_id
 
     def wait_for_item_to_be_searchable(self, label, created_id, max_wait=600, interval=60):
         waited = 0
         while waited < max_wait:
             found_id = self.check_item_exists(label)
             if found_id:
-                self.log_with_item(label, created_id, "info", f"Item is now indexed as {found_id}. Continuing.")
+                self.log_with_item(label, created_id, "warning", f"Item is now indexed as {found_id}. Continuing.")
                 return True
-            self.log_with_item(label, created_id, "info", f"Item not indexed. Waiting {interval} seconds...")
+            self.log_with_item(label, created_id, "warning", f"Item not indexed. Waiting {interval} seconds...")
             time.sleep(interval)
             waited += interval
         self.log_with_item(label, created_id, "warning", "Item not indexed after timeout.")
@@ -71,7 +81,7 @@ class WikidataUploader:
             return None
         labels = {"en": title}
         new_id = self.create_item(labels)
-        self.log_with_item(title, new_id, "info", f"Created new item {new_id}.")
+        self.log_with_item(title, new_id, "warning", f"Created new item {new_id}.")
         self.wait_for_item_to_be_searchable(title, new_id)
         return new_id
 
@@ -105,11 +115,20 @@ class WikidataUploader:
         if new_descriptions:
             try:
                 item.editDescriptions(new_descriptions, summary="Updating item descriptions.")
-                self.log_with_item(title, item_id, "info", f"Descriptions updated: {new_descriptions}")
+                self.log_with_item(title, item_id, "warning", f"Descriptions updated: {new_descriptions}")
+                for lang, desc in new_descriptions.items():
+                    self.change_log.append({
+                        "Title": title,
+                        "QID": item_id,
+                        "Type": "Description",
+                        "Action": "Updated",
+                        "Property": f"description_{lang}",
+                        "Value": desc
+                    })
             except Exception as e:
                 self.log_with_item(title, item_id, "error", f"Failed to update descriptions: {e}")
         else:
-            self.log_with_item(title, item_id, "info", "No description updates needed.")
+            self.log_with_item(title, item_id, "warning", "No description updates needed.")
 
     def add_claims(self, item_id, row):
         item = pywikibot.ItemPage(self.repo, item_id)
@@ -134,20 +153,52 @@ class WikidataUploader:
                             target.get()
                             if self.claim_already_exists(item, prop, target):
                                 self.stats["claims_skipped"] += 1
+                                self.change_log.append({
+                                    "Title": title,
+                                    "QID": item_id,
+                                    "Type": "Claim",
+                                    "Action": "Skipped",
+                                    "Property": prop,
+                                    "Value": target.id
+                                })
                                 continue
                             claim = pywikibot.Claim(self.repo, prop)
                             claim.setTarget(target)
                             item.addClaim(claim, summary=f"Adding claim {prop} -> {target.id}")
                             self.stats["claims_added"] += 1
+                            self.change_log.append({
+                                "Title": title,
+                                "QID": item_id,
+                                "Type": "Claim",
+                                "Action": "Added",
+                                "Property": prop,
+                                "Value": target.id
+                            })
 
                     elif val_type == "string":
                         if self.claim_already_exists(item, prop, value):
                             self.stats["claims_skipped"] += 1
+                            self.change_log.append({
+                                "Title": title,
+                                "QID": item_id,
+                                "Type": "Claim",
+                                "Action": "Skipped",
+                                "Property": prop,
+                                "Value": value
+                            })
                             continue
                         claim = pywikibot.Claim(self.repo, prop)
                         claim.setTarget(value)
                         item.addClaim(claim, summary=f"Adding claim {prop} -> {value}")
                         self.stats["claims_added"] += 1
+                        self.change_log.append({
+                            "Title": title,
+                            "QID": item_id,
+                            "Type": "Claim",
+                            "Action": "Added",
+                            "Property": prop,
+                            "Value": value
+                        })
 
                     elif val_type == "date":
                         parsed = pd.to_datetime(value, errors="coerce")
@@ -155,11 +206,27 @@ class WikidataUploader:
                             date_target = pywikibot.WbTime(year=parsed.year, month=parsed.month, day=parsed.day)
                             if self.claim_already_exists(item, prop, date_target):
                                 self.stats["claims_skipped"] += 1
+                                self.change_log.append({
+                                    "Title": title,
+                                    "QID": item_id,
+                                    "Type": "Claim",
+                                    "Action": "Skipped",
+                                    "Property": prop,
+                                    "Value": str(parsed.date())
+                                })
                                 continue
                             dateclaim = pywikibot.Claim(self.repo, prop)
                             dateclaim.setTarget(date_target)
                             item.addClaim(dateclaim, summary=f"Adding date claim {prop} -> {parsed.date()}")
                             self.stats["claims_added"] += 1
+                            self.change_log.append({
+                                "Title": title,
+                                "QID": item_id,
+                                "Type": "Claim",
+                                "Action": "Added",
+                                "Property": prop,
+                                "Value": str(parsed.date())
+                            })
                 except Exception as e:
                     self.log_with_item(title, item_id, "error", f"Error adding claim {prop}: {e}")
 
@@ -219,10 +286,26 @@ class WikidataUploader:
                                 for existing in existing_sources
                             ):
                                 self.stats["sources_skipped"] += 1
+                                self.change_log.append({
+                                    "Title": title,
+                                    "QID": item_id,
+                                    "Type": "Source",
+                                    "Action": "Skipped",
+                                    "Property": source_prop,
+                                    "Value": str(source_claim.getTarget())
+                                })
                                 continue
 
                             claim.addSources([source_claim], summary=f"Adding source {source_claim.getID()}")
                             self.stats["sources_added"] += 1
+                            self.change_log.append({
+                                "Title": title,
+                                "QID": item_id,
+                                "Type": "Source",
+                                "Action": "Added",
+                                "Property": source_prop,
+                                "Value": str(source_claim.getTarget())
+                            })
                         except Exception as e:
                             self.log_with_item(title, item_id, "error", f"Source error: {e}")
 
@@ -245,3 +328,30 @@ class WikidataUploader:
             self.add_claims(qid, row)
             self.set_descriptions(qid, row)
             self.add_sources(qid, row)
+
+
+    def save_summary_csv(self, filename=None):
+        import os
+
+        # Go from scripts/ → core/ → pywiki/
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        pywiki_root = os.path.abspath(os.path.join(script_dir, "..", "..", ".."))
+        logs_dir = os.path.join(pywiki_root, "logs")
+        os.makedirs(logs_dir, exist_ok=True)
+
+        # Default to timestamped filename if none provided
+        if filename is None:
+            from datetime import datetime
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            filename = f"summary_log_{timestamp}.csv"
+
+        full_path = os.path.join(logs_dir, filename)
+
+        if not self.change_log:
+            self.logger.info("No changes to save.")
+            return
+
+        import pandas as pd
+        df = pd.DataFrame(self.change_log)
+        df.to_csv(full_path, index=False)
+        self.logger.info(f"Saved summary CSV: {full_path}")

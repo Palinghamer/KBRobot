@@ -1,0 +1,11 @@
+2025-04-11 15:04:20,711 - INFO - [Q239198] Maxims about Mammals II - No description updates needed.
+2025-04-11 15:04:21,309 - WARNING - [Q239199] Maxims about Mammals III - Item already exists.
+2025-04-11 15:04:21,309 - WARNING - [no QID] Maxims about Mammals III - No QID, skipping.
+2025-04-11 15:04:22,168 - INFO - [Q239184] Maxims about Mammals IV - No description updates needed.
+2025-04-11 15:04:23,718 - INFO - [Q239185] Maxims about Mammals V - No description updates needed.
+2025-04-11 15:04:25,423 - INFO - [Q239222] Maxims about Mammals VI - No description updates needed.
+2025-04-11 15:04:25,974 - INFO - Saved summary CSV: summary_log.csv
+2025-04-11 15:04:25,974 - INFO - Script finished.
+2025-04-11 15:04:25,974 - INFO - Processed: 5, Created: 0, Skipped: 1
+2025-04-11 15:04:25,974 - INFO - Claims Added: 0, Claims Skipped: 21
+2025-04-11 15:04:25,974 - INFO - Sources Added: 0, Sources Skipped: 7
