@@ -115,7 +115,7 @@ class WikidataUploader:
         if new_descriptions:
             try:
                 item.editDescriptions(new_descriptions, summary="Updating item descriptions.")
-                self.log_with_item(title, item_id, "warning", f"Descriptions updated: {new_descriptions}")
+                self.log_with_item(title, item_id, "info", f"Descriptions updated: {new_descriptions}")
                 for lang, desc in new_descriptions.items():
                     self.change_log.append({
                         "Title": title,
