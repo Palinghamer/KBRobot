@@ -1,6 +1,7 @@
 import pywikibot
 from pywikibot.data import api
 import pandas as pd
+import json 
 import re
 import os
 import sys
@@ -38,6 +39,12 @@ logging.basicConfig(
     ]
 )
 
+def load_config(filename="config.json"):
+    config_path = os.path.join(script_dir, filename)
+    with open(config_path, "r") as f:
+        return json.load(f)
+
+
 # -------------------------
 # Logging Helper
 # -------------------------
@@ -69,19 +76,19 @@ def update_last_run():
 # -------------------------
 # Property map
 # -------------------------
-property_map = {
-    "P50": {"property": "P50", "type": "string"},
-    "P767": {"property": "P767", "type": "string"},
-    "P761": {"property": "P761", "type": "date"},
-    "P145": {"property": "P145", "type": "item"},
-    "P31": {"property": "P31", "type": "string"},
-    "P31_2": {"property": "P31", "type": "string"},
-    "P82": {"property": "P82", "type": "item"}
-}
+# property_map = {
+#     "P50": {"property": "P50", "type": "string"},
+#     "P767": {"property": "P767", "type": "string"},
+#     "P761": {"property": "P761", "type": "date"},
+#     "P145": {"property": "P145", "type": "item"},
+#     "P31": {"property": "P31", "type": "string"},
+#     "P31_2": {"property": "P31", "type": "string"},
+#     "P82": {"property": "P82", "type": "item"}
+# }
 
-source_map = {
-    "P149": {"property": "P149", "type": "item", "targets": ["P82"]},
-}
+# source_map = {
+#     "P149": {"property": "P149", "type": "item", "targets": ["P82"]},
+# }
 
 def read_csv_to_df(path):
     df = pd.read_csv(path)
@@ -379,13 +386,19 @@ if __name__ == "__main__":
         sys.exit(1)
 
     update_last_run()
+    config = load_config("config.json")
+    property_map = config["property_map"]
+    source_map = config["source_map"]
+
     df = read_csv_to_df("test_data4.csv")
     site = pywikibot.Site("test", "wikidata")
 
     process_csv_and_create_items(df, site, property_map, source_map, stats)
 
+    # Print final summary
     logging.info("Script completed successfully.")
-    logging.info("---- Summary ----")
-    for k, v in stats.items():
-        logging.info(f"{k.replace('_', ' ').capitalize()}: {v}")
+    logging.info(f"Items processed: {stats['processed']}, Created: {stats['created']}, Skipped: {stats['skipped']}")
+    logging.info(f"Claims Added: {stats['claims_added']}, Claims Skipped: {stats['claims_skipped']}")
+    logging.info(f"Sources Added: {stats['sources_added']}, Sources Skipped: {stats['sources_skipped']}")
+
 
