@@ -1,0 +1,36 @@
+2025-04-11 12:12:52,986 - INFO - [Q239198] Maxims about Mammals II - Claim P82 -> Q215175 already exists. Skipping.
+2025-04-11 12:12:52,993 - INFO - [Q239198] Maxims about Mammals II - Date claim P761 -> 2000-01-01 already exists. Skipping.
+2025-04-11 12:12:53,365 - INFO - [Q239198] Maxims about Mammals II - Claim P145 -> Q234514 already exists. Skipping.
+2025-04-11 12:12:53,366 - INFO - [Q239198] Maxims about Mammals II - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-11 12:12:53,366 - INFO - [Q239198] Maxims about Mammals II - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P32' already exists. Skipping.
+2025-04-11 12:12:53,366 - INFO - [Q239198] Maxims about Mammals II - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-11 12:12:53,366 - INFO - [Q239198] Maxims about Mammals II - Finished processing claims.
+2025-04-11 12:12:53,557 - INFO - [Q239198] Maxims about Mammals II - No changes made to descriptions. Description fields are empty or already exist on Wikidata. Please verify manually if required.
+2025-04-11 12:12:53,959 - INFO - [Q239198] Maxims about Mammals II - Source P149 -> [[test:Q239104]] already exists. Skipping.
+2025-04-11 12:12:54,179 - WARNING - [Q239199] Maxims about Mammals III - Already exists, skipping creation. Please verify and make required changes manually.
+2025-04-11 12:12:54,179 - WARNING - [no QID] Maxims about Mammals III - Skipping — no QID available. Please verify and create item manually if required.
+2025-04-11 12:12:54,654 - INFO - [Q239184] Maxims about Mammals IV - Claim P82 -> Q215175 already exists. Skipping.
+2025-04-11 12:12:54,657 - INFO - [Q239184] Maxims about Mammals IV - Date claim P761 -> 2000-01-01 already exists. Skipping.
+2025-04-11 12:12:54,861 - INFO - [Q239184] Maxims about Mammals IV - Claim P145 -> Q234514 already exists. Skipping.
+2025-04-11 12:12:54,862 - INFO - [Q239184] Maxims about Mammals IV - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-11 12:12:54,862 - INFO - [Q239184] Maxims about Mammals IV - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-11 12:12:54,862 - INFO - [Q239184] Maxims about Mammals IV - Finished processing claims.
+2025-04-11 12:12:55,104 - INFO - [Q239184] Maxims about Mammals IV - No changes made to descriptions. Description fields are empty or already exist on Wikidata. Please verify manually if required.
+2025-04-11 12:12:55,543 - INFO - [Q239184] Maxims about Mammals IV - Source P149 -> [[test:Q239104]] already exists. Skipping.
+2025-04-11 12:12:56,011 - INFO - [Q239185] Maxims about Mammals V - Claim P82 -> Q215175 already exists. Skipping.
+2025-04-11 12:12:56,013 - INFO - [Q239185] Maxims about Mammals V - Date claim P761 -> 2000-01-01 already exists. Skipping.
+2025-04-11 12:12:56,223 - INFO - [Q239185] Maxims about Mammals V - Claim P145 -> Q234514 already exists. Skipping.
+2025-04-11 12:12:56,224 - INFO - [Q239185] Maxims about Mammals V - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-11 12:12:56,224 - INFO - [Q239185] Maxims about Mammals V - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-11 12:12:56,224 - INFO - [Q239185] Maxims about Mammals V - Finished processing claims.
+2025-04-11 12:12:56,505 - INFO - [Q239185] Maxims about Mammals V - No changes made to descriptions. Description fields are empty or already exist on Wikidata. Please verify manually if required.
+2025-04-11 12:12:56,948 - INFO - [Q239185] Maxims about Mammals V - Source P149 -> [[test:Q239104]] already exists. Skipping.
+2025-04-11 12:12:57,349 - INFO - [Q239222] Maxims about Mammals VI - Claim P82 -> Q215175 already exists. Skipping.
+2025-04-11 12:12:57,351 - INFO - [Q239222] Maxims about Mammals VI - Date claim P761 -> 2000-01-01 already exists. Skipping.
+2025-04-11 12:12:57,625 - INFO - [Q239222] Maxims about Mammals VI - Claim P145 -> Q234514 already exists. Skipping.
+2025-04-11 12:12:57,626 - INFO - [Q239222] Maxims about Mammals VI - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-11 12:12:57,626 - INFO - [Q239222] Maxims about Mammals VI - Claim P31 -> 'https://test.wikidata.org/wiki/Property:P31' already exists. Skipping.
+2025-04-11 12:12:57,626 - INFO - [Q239222] Maxims about Mammals VI - Finished processing claims.
+2025-04-11 12:12:57,838 - INFO - [Q239222] Maxims about Mammals VI - No changes made to descriptions. Description fields are empty or already exist on Wikidata. Please verify manually if required.
+2025-04-11 12:12:58,443 - INFO - [Q239222] Maxims about Mammals VI - Source P149 -> [[test:Q239104]] already exists. Skipping.
+2025-04-11 12:12:58,443 - INFO - Script completed successfully.

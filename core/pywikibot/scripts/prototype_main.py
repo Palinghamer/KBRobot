@@ -12,6 +12,17 @@ import logging
 # Logging Setup
 # -------------------------
 
+stats = {
+    "processed": 0,
+    "created": 0,
+    "skipped": 0,
+    "claims_added": 0,
+    "claims_skipped": 0,
+    "sources_added": 0,
+    "sources_skipped": 0
+}
+
+
 script_dir = os.path.dirname(os.path.abspath(__file__))
 pywiki_root = os.path.abspath(os.path.join(script_dir, "..", "..", ".."))
 logs_dir = os.path.join(pywiki_root, "logs")
@@ -197,7 +208,7 @@ def source_bundle_exists(existing_sources, new_sources):
             return True
     return False
 
-def add_claims(site, item_id, row, property_map):
+def add_claims(site, item_id, row, property_map, stats):
     repo = site.data_repository()
     item = pywikibot.ItemPage(repo, item_id)
     item.get()
@@ -210,54 +221,61 @@ def add_claims(site, item_id, row, property_map):
         mapping = property_map[col]
         prop = mapping["property"]
         val_type = mapping["type"]
-        value = row[col]
+        raw_value = str(row[col])
+        values = [v.strip() for v in raw_value.split(";") if v.strip()]
 
-        try:
-            if val_type == "item":
-                match = re.search(r"Q\d+", str(value))
-                if match:
-                    target = pywikibot.ItemPage(repo, match.group(0))
-                    target.get()
+        for value in values:
+            try:
+                if val_type == "item":
+                    match = re.search(r"Q\d+", value)
+                    if match:
+                        target = pywikibot.ItemPage(repo, match.group(0))
+                        target.get()
 
-                    if claim_already_exists(item, prop, target):
-                        log_with_item(title, item_id, "info", f"Claim {prop} -> {target.id} already exists. Skipping.")
+                        if claim_already_exists(item, prop, target):
+                            stats["claims_skipped"] += 1
+                            log_with_item(title, item_id, "info", f"Claim {prop} -> {target.id} already exists. Skipping.")
+                            continue
+
+                        claim = pywikibot.Claim(repo, prop)
+                        claim.setTarget(target)
+                        item.addClaim(claim, summary=f"Adding item claim {prop} -> {target.id}")
+                        stats["claims_added"] += 1
+
+                elif val_type == "string":
+                    if claim_already_exists(item, prop, value):
+                        stats["claims_skipped"] += 1
+                        log_with_item(title, item_id, "info", f"Claim {prop} -> '{value}' already exists. Skipping.")
                         continue
 
                     claim = pywikibot.Claim(repo, prop)
-                    claim.setTarget(target)
-                    item.addClaim(claim, summary=f"Adding item claim {prop} -> {target.id}")
-                else:
-                    log_with_item(title, item_id, "warning", f"Skipping {col}: No QID in value '{value}'. Please verify manually if required.")
+                    claim.setTarget(value)
+                    item.addClaim(claim, summary=f"Adding string claim {prop} -> {value}")
+                    stats["claims_added"] += 1
 
-            elif val_type == "string":
-                if claim_already_exists(item, prop, str(value)):
-                    log_with_item(title, item_id, "info", f"Claim {prop} -> '{value}' already exists. Skipping.")
-                    continue
+                elif val_type == "date":
+                    parsed = pd.to_datetime(value, errors="coerce")
+                    if pd.notna(parsed):
+                        date_target = pywikibot.WbTime(year=parsed.year, month=parsed.month, day=parsed.day)
+                        if claim_already_exists(item, prop, date_target):
+                            stats["claims_skipped"] += 1
+                            log_with_item(title, item_id, "info", f"Date claim {prop} -> {parsed.date()} already exists. Skipping.")
+                            continue
 
-                claim = pywikibot.Claim(repo, prop)
-                claim.setTarget(str(value))
-                item.addClaim(claim, summary=f"Adding string claim {prop} -> {value}")
+                        dateclaim = pywikibot.Claim(repo, prop)
+                        dateclaim.setTarget(date_target)
+                        item.addClaim(dateclaim, summary=f"Adding date claim {prop} -> {parsed.date()}.")
+                        stats["claims_added"] += 1
+                    else:
+                        log_with_item(title, item_id, "warning", f"Invalid date for {prop}: {value}.")
 
-            elif val_type == "date":
-                parsed = pd.to_datetime(value, errors="coerce")
-                if pd.notna(parsed):
-                    date_target = pywikibot.WbTime(year=parsed.year, month=parsed.month, day=parsed.day)
-                    if claim_already_exists(item, prop, date_target):
-                        log_with_item(title, item_id, "info", f"Date claim {prop} -> {parsed.date()} already exists. Skipping.")
-                        continue
-
-                    dateclaim = pywikibot.Claim(repo, prop)
-                    dateclaim.setTarget(date_target)
-                    item.addClaim(dateclaim, summary=f"Adding date claim {prop} -> {parsed.date()}.")
-                else:
-                    log_with_item(title, item_id, "warning", f"Invalid date for {prop}: {value}.")
-
-        except Exception as e:
-            log_with_item(title, item_id, "error", f"Error on {col} ({prop}): {e}")
+            except Exception as e:
+                log_with_item(title, item_id, "error", f"Error on {col} ({prop}): {e}")
 
     log_with_item(title, item_id, "info", "Finished processing claims.")
 
-def add_sources(site, item_id, row, source_map):
+
+def add_sources(site, item_id, row, source_map, stats):
     repo = site.data_repository()
     item = pywikibot.ItemPage(repo, item_id)
     item.get()
@@ -271,8 +289,6 @@ def add_sources(site, item_id, row, source_map):
                 log_with_item(title, item_id, "warning", f"Could not get sources for claim {claim}: {e}.")
                 continue
 
-            new_sources = []
-
             for source_col, source_info in source_map.items():
                 target_props = source_info.get("targets")
                 if target_props and prop not in target_props:
@@ -280,53 +296,63 @@ def add_sources(site, item_id, row, source_map):
 
                 source_prop = source_info["property"]
                 source_type = source_info["type"]
-                source_value = row[source_col]
+                source_value_raw = row[source_col]
 
-                if pd.isna(source_value):
+                if pd.isna(source_value_raw):
                     continue
 
-                try:
-                    source_claim = pywikibot.Claim(repo, source_prop, is_reference=True)
+                source_values = [v.strip() for v in str(source_value_raw).split(";") if v.strip()]
 
-                    if source_type == "item":
-                        match = re.search(r"Q\d+", str(source_value))
-                        if match:
-                            target = pywikibot.ItemPage(repo, match.group(0))
-                            target.get()
-                            source_claim.setTarget(target)
+                for val in source_values:
+                    try:
+                        source_claim = pywikibot.Claim(repo, source_prop, is_reference=True)
+
+                        if source_type == "item":
+                            match = re.search(r"Q\d+", val)
+                            if match:
+                                target = pywikibot.ItemPage(repo, match.group(0))
+                                target.get()
+                                source_claim.setTarget(target)
+                            else:
+                                log_with_item(title, item_id, "warning", f"Invalid Q-ID for source in column {source_col}: {val}.")
+                                continue
+
+                        elif source_type == "string":
+                            source_claim.setTarget(val)
+
+                        elif source_type == "date":
+                            dt = pd.to_datetime(val, errors="coerce")
+                            if pd.isna(dt):
+                                log_with_item(title, item_id, "warning", f"Invalid date for source in column {source_col}: {val}.")
+                                continue
+                            date_target = pywikibot.WbTime(year=dt.year, month=dt.month, day=dt.day)
+                            source_claim.setTarget(date_target)
+
                         else:
-                            log_with_item(title, item_id, "warning", f"Invalid Q-ID for source in column {source_col}: {source_value}.")
+                            log_with_item(title, item_id, "warning", f"Unsupported source type '{source_type}' for {source_prop}.")
                             continue
-                    elif source_type == "string":
-                        source_claim.setTarget(str(source_value))
-                    elif source_type == "date":
-                        dt = pd.to_datetime(source_value, errors="coerce")
-                        if pd.isna(dt):
-                            log_with_item(title, item_id, "warning", f"Invalid date for source in column {source_col}: {source_value}.")
+
+                        if any(
+                            source_claim.getID() in existing and
+                            any(source_claim.getTarget() == existing_claim.getTarget() for existing_claim in existing[source_claim.getID()])
+                            for existing in existing_sources
+                        ):
+                            stats["sources_skipped"] += 1
+                            log_with_item(title, item_id, "info", f"Source {source_claim.getID()} -> {source_claim.getTarget()} already exists. Skipping.")
                             continue
-                        date_target = pywikibot.WbTime(year=dt.year, month=dt.month, day=dt.day)
-                        source_claim.setTarget(date_target)
-                    else:
-                        log_with_item(title, item_id, "warning", f"Unsupported source type '{source_type}' for {source_prop}.")
-                        continue
 
-                    new_sources.append(source_claim)
+                        claim.addSources([source_claim], summary=f"Adding source {source_claim.getID()} to claim.")
+                        log_with_item(title, item_id, "info", f"Added source {source_claim.getID()} -> {source_claim.getTarget()} to claim {claim.getID()}")
+                        stats["sources_added"] += 1
 
-                except Exception as e:
-                    log_with_item(title, item_id, "error", f"Error building source claim for {source_col}: {e}.")
+                    except Exception as e:
+                        log_with_item(title, item_id, "error", f"Error adding source {source_col} value '{val}': {e}")
 
-            if new_sources:
-                if source_bundle_exists(existing_sources, new_sources):
-                    log_with_item(title, item_id, "warning", f"Source(s) already exist for claim {claim.getID()}. Skipping. Please verify manually if required. ")
-                    continue
-                try:
-                    claim.addSources(new_sources, summary="Adding source(s) to claim.")
-                    log_with_item(title, item_id, "info", f"Added sources to claim {claim.getID()}")
-                except Exception as e:
-                    log_with_item(title, item_id, "error", f"Failed to add sources to claim {claim.getID()}: {e}.")
 
-def process_csv_and_create_items(df, site, property_map, source_map):
+def process_csv_and_create_items(df, site, property_map, source_map, stats):
     for idx, row in df.iterrows():
+        stats["processed"] += 1
+
         qid = str(row.get("QID")).strip() if "QID" in row else None
         title = row.get("Title", "")
 
@@ -334,23 +360,32 @@ def process_csv_and_create_items(df, site, property_map, source_map):
             qid = check_and_create_item(site, title)
 
             if not qid:
+                stats["skipped"] += 1
                 log_with_item(title, None, "warning", "Skipping — no QID available. Please verify and create item manually if required.")
                 continue
 
+            stats["created"] += 1
             df.at[idx, "QID"] = qid
             df.to_csv("test_data4.csv", index=False)
 
-        add_claims(site, qid, row, property_map)
+        add_claims(site, qid, row, property_map, stats)
         set_descriptions(site, qid, row)
-        add_sources(site, qid, row, source_map)
+        add_sources(site, qid, row, source_map, stats)
+
 
 if __name__ == "__main__":
-    if is_recently_run(min_minutes=5):
+    if is_recently_run(min_minutes=0):
         logging.warning("Script ran recently. Please wait 5 minutes before running it again.")
         sys.exit(1)
 
     update_last_run()
     df = read_csv_to_df("test_data4.csv")
     site = pywikibot.Site("test", "wikidata")
-    process_csv_and_create_items(df, site, property_map, source_map)
+
+    process_csv_and_create_items(df, site, property_map, source_map, stats)
+
     logging.info("Script completed successfully.")
+    logging.info("---- Summary ----")
+    for k, v in stats.items():
+        logging.info(f"{k.replace('_', ' ').capitalize()}: {v}")
+
