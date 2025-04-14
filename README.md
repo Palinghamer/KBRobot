@@ -15,12 +15,13 @@ _Figure 1: Visualisation of the LabEL ontology._
 
 <u>**Note:**</u> this schema serves to help understand the data model and does not fully reflect the logic of the actual Wikidata model. Properties and their targets are represented as classes and subclasses rather than items and properties.
 
-### Upcoming changes
+### Changes
 
 - [x] Support for dates
 - [x] Support for QID checks
 - [x] Support for sources
 - [x] Change logs
-- [ ] Modularisation of script
+- [x] Modularisation of script
+- [x] Support for different upload modes
 - [ ] Guidelines for structured data entry
 - [ ] Documentation for scripts & pywikibot
