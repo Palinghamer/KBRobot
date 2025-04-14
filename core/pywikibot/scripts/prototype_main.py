@@ -4,23 +4,57 @@ from data_loader import read_csv_to_df
 from logger_setup import setup_logger
 from lock_manager import is_recently_run, update_last_run
 import argparse
-
 import pywikibot
 import sys
+import os
+import json
 
 def main():
     parser = argparse.ArgumentParser(description="Upload CSV data to Wikidata.")
     parser.add_argument("csv_path", help="Path to the CSV file to process")
+    parser.add_argument("--config", help="Path to a custom config JSON file")
+    parser.add_argument("--mode", help="Predefined mode (e.g., 'author', 'work')")
     args = parser.parse_args()
 
-    if is_recently_run(min_minutes=0):
-        print("Script ran recently. Wait 5 minutes or delete the lock file.")
+    if is_recently_run(min_minutes=5):
+        print("Script ran recently. Wait 5 minutes before running again.")
         sys.exit(1)
 
     update_last_run()
     logger, run_timestamp = setup_logger()
 
-    config = load_config("config.json")
+    # Determine config path
+    if args.config:
+        config_path = args.config
+        mode_label = "custom config"
+    elif args.mode:
+        profiles_path = os.path.join(os.path.dirname(__file__), "profiles.json")
+        try:
+            with open(profiles_path, "r") as f:
+                profiles = json.load(f)
+            relative_path = profiles.get(args.mode)
+            if not relative_path:
+                print(f"Error: Mode '{args.mode}' not found in profiles.json. Available modes: {', '.join(profiles.keys())}")
+                sys.exit(1)
+            config_path = os.path.join(os.path.dirname(__file__), relative_path)
+            if not os.path.exists(config_path):
+                print(f"Error: Config file for mode '{args.mode}' not found at: {config_path}")
+                sys.exit(1)
+            mode_label = args.mode
+        except Exception as e:
+            print(f"Error loading profiles.json: {e}")
+            sys.exit(1)
+    else:
+        config_path = os.path.join(os.path.dirname(__file__), "configs/config.json")
+        mode_label = "default"
+
+    print(f"\nYou are about to run the script in {mode_label.upper()} mode. Editing Wikidata using the incorrect mode will result in unintended changes.")
+    confirm = input("--- Continue? (Y/N): ").strip().lower()
+    if confirm not in ("y", "yes"):
+        print("Aborting.")
+        sys.exit(0)
+
+    config = load_config(config_path)
     property_map = config["property_map"]
     source_map = config["source_map"]
 

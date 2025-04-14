@@ -1,0 +1,14 @@
+{
+  "property_map": {
+    "P50": { "property": "P50", "type": "string" },
+    "P767": { "property": "P767", "type": "string" },
+    "P761": { "property": "P761", "type": "date" },
+    "P145": { "property": "P145", "type": "item" },
+    "P31": { "property": "P31", "type": "string" },
+    "P31_2": { "property": "P31", "type": "string" },
+    "P82": { "property": "P82", "type": "item" }
+  },
+  "source_map": {
+    "P149": { "property": "P149", "type": "item", "targets": ["P82"] }
+  }
+}

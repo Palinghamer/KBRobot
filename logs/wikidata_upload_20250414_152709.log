@@ -1,0 +1,9 @@
+2025-04-14 15:27:11,572 - WARNING - [Q239250] Disquisition on the Malady of the Mimic - No description updates needed.
+2025-04-14 15:27:12,260 - WARNING - [Q239199] Maxims about Mammals III - Item already exists.
+2025-04-14 15:27:12,261 - WARNING - [no QID] Maxims about Mammals III - No QID, skipping.
+2025-04-14 15:27:13,406 - WARNING - [Q239251] On Humanoid Mimicry of Animals and Plants - No description updates needed.
+2025-04-14 15:27:14,079 - INFO - Saved summary CSV: /Users/ilyagoessens/Desktop/digital humanities/kbr internship/pywiki/logs/summary_log_20250414_152709.csv
+2025-04-14 15:27:14,079 - INFO - Script finished.
+2025-04-14 15:27:14,079 - INFO - Items processed: 3, Created: 0, Skipped: 1
+2025-04-14 15:27:14,079 - INFO - Claims Added: 0, Claims Skipped: 11
+2025-04-14 15:27:14,079 - INFO - Sources Added: 0, Sources Skipped: 3
