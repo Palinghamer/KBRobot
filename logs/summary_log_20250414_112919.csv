@@ -1,0 +1,21 @@
+Title,QID,Type,Action,Property,Value
+Disquisition on the Malady of the Mimic,Q239250,Item,Created,,
+Disquisition on the Malady of the Mimic,Q239250,Claim,Added,P82,Q215175
+Disquisition on the Malady of the Mimic,Q239250,Claim,Added,P761,2000-01-01
+Disquisition on the Malady of the Mimic,Q239250,Claim,Added,P145,Q234514
+Disquisition on the Malady of the Mimic,Q239250,Claim,Added,P31,https://test.wikidata.org/wiki/Property:P31
+Disquisition on the Malady of the Mimic,Q239250,Claim,Added,P31,https://test.wikidata.org/wiki/Property:P32
+Disquisition on the Malady of the Mimic,Q239250,Claim,Skipped,P31,https://test.wikidata.org/wiki/Property:P31
+Disquisition on the Malady of the Mimic,Q239250,Description,Updated,description_en,Disquisition on the Malady of the Mimic is a book written by Q Girl.
+Disquisition on the Malady of the Mimic,Q239250,Description,Updated,description_de,"Disquisition on the Malady of the Mimic ist ein Buch, das von Q Girl geschrieben wurde."
+Disquisition on the Malady of the Mimic,Q239250,Source,Added,P149,[[test:Q239104]]
+On Humanoid Mimicry of Animals and Plants,Q239251,Item,Created,,
+On Humanoid Mimicry of Animals and Plants,Q239251,Claim,Added,P82,Q215175
+On Humanoid Mimicry of Animals and Plants,Q239251,Claim,Added,P761,2000-01-01
+On Humanoid Mimicry of Animals and Plants,Q239251,Claim,Added,P145,Q234514
+On Humanoid Mimicry of Animals and Plants,Q239251,Claim,Added,P31,https://test.wikidata.org/wiki/Property:P31
+On Humanoid Mimicry of Animals and Plants,Q239251,Claim,Skipped,P31,https://test.wikidata.org/wiki/Property:P31
+On Humanoid Mimicry of Animals and Plants,Q239251,Description,Updated,description_en,On Humanoid Mimicry of Animals and Plants is a book.
+On Humanoid Mimicry of Animals and Plants,Q239251,Description,Updated,description_de,On Humanoid Mimicry of Animals and Plants ist ein Buch.
+On Humanoid Mimicry of Animals and Plants,Q239251,Source,Added,P149,[[test:Q239104]]
+On Humanoid Mimicry of Animals and Plants,Q239251,Source,Added,P149,[[test:Q226245]]

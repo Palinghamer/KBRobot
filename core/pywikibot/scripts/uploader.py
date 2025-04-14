@@ -309,7 +309,7 @@ class WikidataUploader:
                         except Exception as e:
                             self.log_with_item(title, item_id, "error", f"Source error: {e}")
 
-    def upload_from_dataframe(self, df):
+    def upload_from_dataframe(self, df, csv_path):
         for idx, row in df.iterrows():
             self.stats["processed"] += 1
             qid = str(row.get("QID")).strip() if "QID" in row else None
@@ -323,7 +323,7 @@ class WikidataUploader:
                     continue
                 self.stats["created"] += 1
                 df.at[idx, "QID"] = qid
-                df.to_csv("test_data4.csv", index=False)
+                df.to_csv(csv_path, index=False)
 
             self.add_claims(qid, row)
             self.set_descriptions(qid, row)

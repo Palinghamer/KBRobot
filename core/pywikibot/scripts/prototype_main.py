@@ -3,29 +3,33 @@ from config_loader import load_config
 from data_loader import read_csv_to_df
 from logger_setup import setup_logger
 from lock_manager import is_recently_run, update_last_run
+import argparse
 
 import pywikibot
 import sys
 
 def main():
+    parser = argparse.ArgumentParser(description="Upload CSV data to Wikidata.")
+    parser.add_argument("csv_path", help="Path to the CSV file to process")
+    args = parser.parse_args()
+
     if is_recently_run(min_minutes=0):
         print("Script ran recently. Wait 5 minutes or delete the lock file.")
         sys.exit(1)
 
     update_last_run()
     logger, run_timestamp = setup_logger()
-    
+
     config = load_config("config.json")
     property_map = config["property_map"]
     source_map = config["source_map"]
 
-    df = read_csv_to_df("test_data4.csv")
+    df = read_csv_to_df(args.csv_path)
     site = pywikibot.Site("test", "wikidata")
     site.login()
 
     uploader = WikidataUploader(site, property_map, source_map, logger)
-    uploader.upload_from_dataframe(df)
-
+    uploader.upload_from_dataframe(df, args.csv_path)
 
     summary_filename = f"summary_log_{run_timestamp}.csv"
     uploader.save_summary_csv(summary_filename)
