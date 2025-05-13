@@ -15,13 +15,13 @@ Pre-existent items and statements are skipped to prevent erroneous edits. After 
 
 # Installation instructions
 
-### Requirements
+## Requirements
 
 - Python 3.12 or higher
 - Pandas 2.2.3
 - A local clone of this repository
 
-### Installation
+## Installation
 
 Clone the repository locally for usage and development purposes. Scripts should be run from the `/core` directory using `pwb.py`. This differs from installing Pywikibot via `pip`, where scripts can be executed directly without referencing `pwb.py`.
 
@@ -37,7 +37,7 @@ Navigate to `/core` :
 cd pywiki/core
 ```
 
-### Configuration login
+## Configuration login
 
 To get started, create your `user-config` file using `generate_user_files.py`, this file contains the [Wikidata domain you intend to edit, as well as your login credentials](https://www.wikidata.org/wiki/Wikidata:Pywikibot_-_Python_3_Tutorial/Setting_up_Shop#Configuration).
 
@@ -61,7 +61,7 @@ If you are uncertain for which website or account your current session has been 
 
 # Usage instructions
 
-### How does it work?
+## How does it work?
 
 Once called, the bot loops through each item in the file (e.g., works or authors). For each item, it first checks if it was already assigned a QID. If not, it searches Wikidata using the item’s title. If a matching item is found, it is skipped to let the user review this item manually to avoid potential errors. If no match is found, a new Wikidata item is created, and its QID is written to the CSV. The bot then adds descriptions, statements, and sources to the item. Statements are created using the property codes from the column headers and their corresponding row values. If an identical statement already exists, it is skipped to prevent duplication. Users can review these skipped statements if needed.
 
@@ -69,13 +69,13 @@ Once called, the bot loops through each item in the file (e.g., works or authors
 
 To avoid overloading the API, the bot also periodically pauses between requests. Moreover, upon creating a new item, it enters a sleep cycle checking every minute if the new item has been indexed. If the item appears within 10 minutes, the script continues adding statements. Otherwise it moves on to the next item. QIDs for all newly created items are saved to the CSV, so skipped items can be edited manually or automatically processed by rerunning the script. These pauses are thus desired behaviour; simply wait for the script to complete, then check the change history for a summary of what was updated or skipped.
 
-### Data
+## Data
 
 The bot takes a structured CSV containing QIDs, titles, properties, items and values to be added to Wikidata. Templates can be found in `/core/data`. New formats can be created, but the structure of these CSVs should match the structure outlined in the `config.json` files at `/pywikibot/scripts/configs`.
 
 For a detailed explanation on how values should be entered into the CSV, please refer to the **_annotation guidelines_** [chapter needed]**_._** For information on the `config` files, please refer to the subchapter [Creating new CSV & `config` files for new item types](https://www.notion.so/Creating-new-CSV-config-files-for-new-item-types-1f1b2c9a97908051b2ecee8e6d849a86?pvs=21)
 
-### Running the bot
+## Running the bot
 
 The script comes preconfigured to create and populate work or author items and can be called on any CSV file. As for this setup, the repository is cloned locally, it is necessary to use `pwb.py` to run scripts.
 
@@ -114,7 +114,7 @@ You are about to run the script in AUTHOR mode. Editing Wikidata using the incor
 
 Let the script run. A summary of actions undertaken or skipped will appear in the terminal upon completion, and a change history file will be added to the `/logs` folder for the user to validate the output.
 
-### Change history and logs
+## Change history and logs
 
 Every time the script is ran, two files are created: a CSV file containing the history of changes made, and a .log file containing debugging information. Both are saved with timestamps in the folder `/logs` in the project root.
 
@@ -129,7 +129,7 @@ The user can refer to the change history to keep track of which items were creat
 
 For debugging purposes, there is also a log with information about errors or skips. For future changes, this logging could be expanded.
 
-### Creating new CSV & `config` files for new item types
+## Creating new CSV & `config` files for new item types
 
 It is possible to add custom profiles to upload items that are not authors or works (such as events, for example). This can by done by defining your own CSV structure, mirroring its logic in a `config.json` file stored in the `/configs` folder, and adding this configuration as a `—-mode` in `profiles.json`.
 
