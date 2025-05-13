@@ -2,7 +2,7 @@
 
 # Overview
 
-> ⚠️ **CAUTION:** To avoid accidental vandalism to Wikidata, it is critical that the data provided to the bot is correct and adheres to the [policies and guidelines](https://www.wikidata.org/wiki/Wikidata:List_of_policies_and_guidelines), including the [notability criterion](https://www.wikidata.org/wiki/Wikidata:Notability).
+> ⚠️ **Warning:** To avoid accidental vandalism to Wikidata, it is critical that the data provided to the bot is correct and adheres to the [policies and guidelines](https://www.wikidata.org/wiki/Wikidata:List_of_policies_and_guidelines), including the [notability criterion](https://www.wikidata.org/wiki/Wikidata:Notability).
 
 This bot automates item creation and population on [Wikidata](https://www.wikidata.org/) for electronic literature works archived by the [Laboratory for Electronic Literature](https://www.kbr.be/en/projects/laboratory-for-electronic-literature/) (LabEL) at KBR. It allows archivists to efficiently and accurately upload large amounts of structured data, in accordance with Wikidata [policies and guidelines](https://www.wikidata.org/wiki/Wikidata:List_of_policies_and_guidelines).
 
@@ -41,7 +41,7 @@ cd pywiki/core
 
 To get started, create your `user-config` file using `generate_user_files.py`, this file contains the [Wikidata domain you intend to edit, as well as your login credentials](https://www.wikidata.org/wiki/Wikidata:Pywikibot_-_Python_3_Tutorial/Setting_up_Shop#Configuration).
 
-> ⚠️ **CAUTION:** The configuration determines which Wikimedia site the bot will edit. When testing, the language and domain should be set to “test” to avoid edits to the live website.
+> ⚠️ **Warning:** The configuration determines which Wikimedia site the bot will edit. When testing, the language and domain should be set to “test” to avoid edits to the live website.
 
 Generate your `user-config` file:
 
@@ -65,7 +65,7 @@ If you are uncertain for which website or account your current session has been 
 
 Once called, the bot loops through each item in the file (e.g., works or authors). For each item, it first checks if it was already assigned a QID. If not, it searches Wikidata using the item’s title. If a matching item is found, it is skipped to let the user review this item manually to avoid potential errors. If no match is found, a new Wikidata item is created, and its QID is written to the CSV. The bot then adds descriptions, statements, and sources to the item. Statements are created using the property codes from the column headers and their corresponding row values. If an identical statement already exists, it is skipped to prevent duplication. Users can review these skipped statements if needed.
 
-> **CAUTION:** The script is time-gated by default and can only be ran once every 5 minutes. This is to prevent unintended duplicate edits to Wikidata. While the bot checks for duplicate items and statements, these safeguards are limited by the refresh rate of Wikidata’s indexing. Running the script multiple times in quick succession may thus result in duplicate items or statements.
+> ⚠️ **Warning:** The script is time-gated by default and can only be ran once every 5 minutes. This is to prevent unintended duplicate edits to Wikidata. While the bot checks for duplicate items and statements, these safeguards are limited by the refresh rate of Wikidata’s indexing. Running the script multiple times in quick succession may thus result in duplicate items or statements.
 
 To avoid overloading the API, the bot also periodically pauses between requests. Moreover, upon creating a new item, it enters a sleep cycle checking every minute if the new item has been indexed. If the item appears within 10 minutes, the script continues adding statements. Otherwise it moves on to the next item. QIDs for all newly created items are saved to the CSV, so skipped items can be edited manually or automatically processed by rerunning the script. These pauses are thus desired behaviour; simply wait for the script to complete, then check the change history for a summary of what was updated or skipped.
 
@@ -135,7 +135,7 @@ It is possible to add custom profiles to upload items that are not authors or wo
 
 As noted above, Wikidata statements consist of a property and a corresponding value. In the CSV file, each column header represents a **property ID**, and the values in the rows represent the **value** for that property. To define statements, enter the **property ID** (e.g., `P31`) as the column header and provide the appropriate value in each row (such as QIDs, dates, URLs, sources, etc.).
 
-> ⚠️ **CAUTION:** The first two columns of the CSV must _always_ be “**Title**” and “**QID**”. These are fixed and should **not** be renamed or reconfigured, as they are critical for identifying, populating, or creating each item accurately.
+> ⚠️ **Warning:** The first two columns of the CSV must _always_ be “**Title**” and “**QID**”. These are fixed and should **not** be renamed or reconfigured, as they are critical for identifying, populating, or creating each item accurately.
 
 The CSV’s can be located anywhere on your machine, but there is dedicated folder reserved for data files at the relative path `/core/data` where the template CSV’s for work and author items are saved.
 
