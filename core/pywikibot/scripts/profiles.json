@@ -1,4 +1,5 @@
 {
   "author": "configs/config_authors.json",
-  "work": "configs/config.json"
+  "work": "configs/config.json",
+  "test": "configs/config_test.json"
 }

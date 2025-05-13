@@ -59,7 +59,8 @@ def main():
     source_map = config["source_map"]
 
     df = read_csv_to_df(args.csv_path)
-    site = pywikibot.Site("test", "wikidata")
+    site = pywikibot.Site()
+
     site.login()
 
     uploader = WikidataUploader(site, property_map, source_map, logger)
