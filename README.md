@@ -149,7 +149,7 @@ Column headers can represent different statement properties such as simple prope
 
 ### Statements
 
-There are two required columns that every CSV must include as the first and second columns: `Title` and `QID`. 
+There are two required columns that every CSV must include as the first and second columns `Title` and `QID`:
 
 1. `Title` is a human-readable label for the item in English. This is used to find or create the item and should **always** contain a value.
 2. `QID` is used to identify existing items on Wikidata. If a valid Q-ID is provided, the script updates that item. If the field is empty or invalid, the script attempts to create a new item using the value in the `Title` column.
