@@ -1,0 +1,19 @@
+2025-05-26 11:28:28,201 - ERROR - [Q240067] The Artless Beauty - Error adding claim P82: 'ItemPage' object has no attribute 'user_add_claim'
+2025-05-26 11:28:28,207 - ERROR - [Q240067] The Artless Beauty - Error adding claim P761: 'ItemPage' object has no attribute 'user_add_claim'
+2025-05-26 11:28:28,961 - ERROR - [Q240067] The Artless Beauty - Error adding claim P145: 'ItemPage' object has no attribute 'user_add_claim'
+2025-05-26 11:28:28,962 - ERROR - [Q240067] The Artless Beauty - Error adding claim P31: 'ItemPage' object has no attribute 'user_add_claim'
+2025-05-26 11:28:28,962 - ERROR - [Q240067] The Artless Beauty - Error adding claim P31: 'ItemPage' object has no attribute 'user_add_claim'
+2025-05-26 11:28:28,962 - ERROR - [Q240067] The Artless Beauty - Error adding claim P31: 'ItemPage' object has no attribute 'user_add_claim'
+2025-05-26 11:28:29,124 - WARNING - [Q240067] The Artless Beauty - No description updates needed.
+2025-05-26 11:28:29,735 - ERROR - [Q240068] The Artful Ugly - Error adding claim P82: 'ItemPage' object has no attribute 'user_add_claim'
+2025-05-26 11:28:29,738 - ERROR - [Q240068] The Artful Ugly - Error adding claim P761: 'ItemPage' object has no attribute 'user_add_claim'
+2025-05-26 11:28:30,014 - ERROR - [Q240068] The Artful Ugly - Error adding claim P145: 'ItemPage' object has no attribute 'user_add_claim'
+2025-05-26 11:28:30,015 - ERROR - [Q240068] The Artful Ugly - Error adding claim P31: 'ItemPage' object has no attribute 'user_add_claim'
+2025-05-26 11:28:30,015 - ERROR - [Q240068] The Artful Ugly - Error adding claim P31: 'ItemPage' object has no attribute 'user_add_claim'
+2025-05-26 11:28:30,016 - ERROR - [Q240068] The Artful Ugly - Error adding claim P31: 'ItemPage' object has no attribute 'user_add_claim'
+2025-05-26 11:28:30,219 - WARNING - [Q240068] The Artful Ugly - No description updates needed.
+2025-05-26 11:28:30,398 - INFO - No changes to save.
+2025-05-26 11:28:30,398 - INFO - Script finished.
+2025-05-26 11:28:30,398 - INFO - Items processed: 2, Created: 0, Skipped: 0
+2025-05-26 11:28:30,398 - INFO - Claims Added: 0, Claims Skipped: 0
+2025-05-26 11:28:30,398 - INFO - Sources Added: 0, Sources Skipped: 0

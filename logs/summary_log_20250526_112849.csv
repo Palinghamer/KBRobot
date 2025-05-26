@@ -1,0 +1,15 @@
+Title,QID,Type,Action,Property,Value
+The Artless Beauty,Q240067,Claim,Added,P82,Q215175
+The Artless Beauty,Q240067,Claim,Added,P761,2000-01-01
+The Artless Beauty,Q240067,Claim,Added,P145,Q234514
+The Artless Beauty,Q240067,Claim,Added,P31,https://test.wikidata.org/wiki/Property:P31
+The Artless Beauty,Q240067,Claim,Added,P31,https://test.wikidata.org/wiki/Property:P32
+The Artless Beauty,Q240067,Claim,Skipped,P31,https://test.wikidata.org/wiki/Property:P31
+The Artless Beauty,Q240067,Source,Added,P149,[[test:Q239104]]
+The Artful Ugly,Q240068,Claim,Added,P82,Q215175
+The Artful Ugly,Q240068,Claim,Added,P761,2000-01-01
+The Artful Ugly,Q240068,Claim,Added,P145,Q234514
+The Artful Ugly,Q240068,Claim,Added,P31,https://test.wikidata.org/wiki/Property:P31
+The Artful Ugly,Q240068,Claim,Added,P31,https://test.wikidata.org/wiki/Property:P32
+The Artful Ugly,Q240068,Claim,Skipped,P31,https://test.wikidata.org/wiki/Property:P31
+The Artful Ugly,Q240068,Source,Added,P149,[[test:Q239104]]

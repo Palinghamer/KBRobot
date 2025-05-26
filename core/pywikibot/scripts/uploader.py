@@ -49,7 +49,7 @@ class WikidataUploader:
 
     def create_item(self, label_dict):
         new_item = pywikibot.ItemPage(self.site)
-        new_item.editLabels(labels=label_dict, summary="Creating a new item.")
+        new_item.editLabels(labels=label_dict, summary="Creating a new item.", bot=True)
         new_id = new_item.getID()
         self.change_log.append({
             "Title": label_dict.get("en", ""),
@@ -114,7 +114,7 @@ class WikidataUploader:
 
         if new_descriptions:
             try:
-                item.editDescriptions(new_descriptions, summary="Updating item descriptions.")
+                item.editDescriptions(new_descriptions, summary="Updating item descriptions.", bot=True)
                 self.log_with_item(title, item_id, "info", f"Descriptions updated: {new_descriptions}")
                 for lang, desc in new_descriptions.items():
                     self.change_log.append({
@@ -164,7 +164,7 @@ class WikidataUploader:
                                 continue
                             claim = pywikibot.Claim(self.repo, prop)
                             claim.setTarget(target)
-                            item.addClaim(claim, summary=f"Adding claim {prop} -> {target.id}")
+                            item.addClaim(claim, bot=True, summary=f"Adding claim {prop} -> {target.id}")
                             self.stats["claims_added"] += 1
                             self.change_log.append({
                                 "Title": title,
@@ -189,7 +189,7 @@ class WikidataUploader:
                             continue
                         claim = pywikibot.Claim(self.repo, prop)
                         claim.setTarget(value)
-                        item.addClaim(claim, summary=f"Adding claim {prop} -> {value}")
+                        item.addClaim(claim, bot=True, summary=f"Adding claim {prop} -> {value}")
                         self.stats["claims_added"] += 1
                         self.change_log.append({
                             "Title": title,
@@ -217,7 +217,7 @@ class WikidataUploader:
                                 continue
                             dateclaim = pywikibot.Claim(self.repo, prop)
                             dateclaim.setTarget(date_target)
-                            item.addClaim(dateclaim, summary=f"Adding date claim {prop} -> {parsed.date()}")
+                            item.addClaim(dateclaim, bot=True, summary=f"Adding date claim {prop} -> {parsed.date()}")
                             self.stats["claims_added"] += 1
                             self.change_log.append({
                                 "Title": title,
